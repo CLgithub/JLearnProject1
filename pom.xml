@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cl.ecps</groupId>
+	<artifactId>ecps-parent1110</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>	<!-- pom这样代表父工程 -->
+
+	<!-- 聚合子模块  begin -->
+	<modules>
+		<module>ecps-console</module>
+		<module>ecps-core</module>
+		<module>ecps-portal</module>
+		<module>ecps-file</module>
+	</modules>
+	<!-- 聚合子模块  end -->
+	
+	<!-- 父工程依赖后，子工程会继承依赖，但是这样不好 -->	
+	<!-- <dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+		</dependency>
+	</dependencies> -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<log4j.version>1.2.9</log4j.version>
+		<spring.version>4.2.3.RELEASE</spring.version>
+		<springjdbc.version>3.2.2.RELEASE</springjdbc.version>
+		<c3p0.version>0.9.5.2</c3p0.version>
+		<apachecxf.version>3.1.7</apachecxf.version>
+		<mysql.connector.version>5.1.34_1</mysql.connector.version>
+		<strutsmenu>2.4.3</strutsmenu>
+	</properties>
+	
+	<!-- 使用依赖管理,如果子类想用，需要引用，但不需要指定version -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			
+			<!-- spring核心包 -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${springjdbc.version}</version>
+			</dependency>
+			
+			<!-- c3p0 -->
+			<dependency>
+				<groupId>com.mchange</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${c3p0.version}</version>
+			</dependency>
+			
+			<!-- webService框架cxf begin -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>${apachecxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http-netty-client</artifactId>
+				<version>${apachecxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http-jetty</artifactId>
+				<version>${apachecxf.version}</version>
+			</dependency>
+			
+			<!-- mysql jdbc driver -->
+			<dependency>
+				<groupId>org.wisdom-framework</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.connector.version}</version>
+			</dependency>
+			
+			<!-- struts-menu -->
+			<dependency>
+			    <groupId>struts-menu</groupId>
+			    <artifactId>struts-menu</artifactId>
+			    <version>${strutsmenu}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-struts</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+</project>
