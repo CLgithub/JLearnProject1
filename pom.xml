@@ -14,15 +14,7 @@
 		<module>ecps-file</module>
 	</modules>
 	<!-- 聚合子模块  end -->
-	
-	<!-- 父工程依赖后，子工程会继承依赖，但是这样不好 -->	
-	<!-- <dependencies>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.12</version>
-		</dependency>
-	</dependencies> -->
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j.version>1.2.9</log4j.version>
@@ -34,11 +26,15 @@
 		<mysql.connector.version>5.1.34_1</mysql.connector.version>
 		<strutsmenu.version>2.4.3</strutsmenu.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
+		<mybatist.version>3.3.0</mybatist.version>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
+		<mybatis-generator.version>1.3.2</mybatis-generator.version>
 	</properties>
 	
-	<!-- 使用依赖管理,如果子类想用，需要引用，但不需要指定version -->
+	<!-- 可以直接使用dependencies，但是那样子工程会直接继承，所以使用依赖管理,如果子类想用，需要引用，但不需要指定version -->
 	<dependencyManagement>
 		<dependencies>
+			<!-- log4j -->
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
@@ -78,18 +74,14 @@
 			    <artifactId>spring-modules-validation</artifactId>
 			    <version>0.8a</version>
 			</dependency>
+			
 			<!-- jstl -->
 			<dependency>
 			    <groupId>jstl</groupId>
 			    <artifactId>jstl</artifactId>
 			    <version>1.2</version>
 			</dependency>
-		
-			<dependency>
-				<groupId>commons-logging</groupId>
-				<artifactId>commons-logging-api</artifactId>
-				<version>1.1</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjweaver</artifactId>
@@ -144,8 +136,53 @@
 			    <version>2.4.2</version>
 			</dependency>
 			
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatist.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis-spring.version}</version>
+			</dependency>
+			<!-- mybatis逆向工程包 -->
+			<dependency>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-core</artifactId>
+				<version>${mybatis-generator.version}</version>
+			</dependency>
 			
 			
 		</dependencies>
 	</dependencyManagement>
+	
+	<!-- 配置私服地址 -->
+	<!--maven的生命周期插件的下载地址 -->
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>maven-public</id>
+			<name>maven-public</name>
+			<url>http://localhost:8081/repository/maven-public/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<id>maven-public</id>
+			<name>maven-public</name>
+			<url>http://localhost:8081/repository/maven-public/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 </project>

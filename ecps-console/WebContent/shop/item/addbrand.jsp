@@ -6,153 +6,144 @@
 <meta name="tag" content="tagName"/>
 <script type="text/javascript" src="<c:url value='/${system}/res/js/jquery.form.js'/>"></script>
 <script type="text/javascript">
-
 $(function(){
-	
 	$("#form111").submit(function(){
-		
 		var isSubmit = true;
-		//获得去到每一个input输入框
 		$(this).find("[reg2]").each(function(){
-			
-			var regStr = $(this).attr("reg2");
-			var reg = new RegExp(regStr);
+			//获得输入的值
+			var val = $(this).val();
+			//获得正则表达式
+			var reg = $(this).attr("reg2");
+			//获得提示信息
 			var tip = $(this).attr("tip");
-			var val = $.trim($(this).val());
-			var input = $(this);
-			var name = $(this).attr("name");
-			if(!reg.test(val)){
-				$(this).next("span").html(tip);
-				//中断each使用return false,不能使用return;和break;
+			//创建正则表达式的对象
+			var regExp = new RegExp(reg);
+			if(!regExp.test($.trim(val))){
 				isSubmit = false;
+				$(this).next("span").html("<font color='red'>"+tip+"</font>");
+				//如果想要终止循环要使用return false 不是break和return;
 				return false;
 			}else{
-				//如果是品牌名称需要做服务器端的品牌名称的重复验证
-				if(name == "brandName"){
-					$.ajax({
-						url:"${path}/brand/validateBrandName.do",
-						type:"post",
-						dataType:"text",
-						data:{
-							brandName:val
-						},
-						success:function(responseText){
-							if(responseText == "no"){
-								input.next("span").html("品牌名称不能重复");
-								isSubmit = false;
-								return false;
-							}
-						},
-						error:function(){
-							alert("系统错误");
-						}
-					});
+				var inputName = $(this).attr("name");
+				if(inputName == "brandName"){
+					var result = validBrandName(val);
+					if(result == "yes"){
+						$(this).next("span").html("<font color='red'>品牌名称已经存在</font>");
+						isSubmit = false;
+						return false;
+					}else{
+						$(this).next("span").html("");
+					}
 				}
 				
+			}
+		})
+		
+		$(this).find("[reg1]").each(function(){
+			//获得输入的值
+			var val = $(this).val();
+			//获得正则表达式
+			var reg = $(this).attr("reg1");
+			//获得提示信息
+			var tip = $(this).attr("tip");
+			//创建正则表达式的对象
+			var regExp = new RegExp(reg);
+			if(val != null && $.trim(val) != "" && !regExp.test($.trim(val))){
+				isSubmit = false;
+				$(this).next("span").html("<font color='red'>"+tip+"</font>");
+				//如果想要终止循环要使用return false 不是break和return;
+				return false;
+			}else{
 				$(this).next("span").html("");
 			}
 		});
-		
-		$(this).find("[reg1]").each(function(){
-			
-			var regStr = $(this).attr("reg1");
-			var reg = new RegExp(regStr);
-			var tip = $(this).attr("tip");
-			var val = $.trim($(this).val());
-			if(val != null && val != ""){
-				if(!reg.test(val)){
-					$(this).next("span").html(tip);
-					//中断each使用return false,不能使用return;和break;
+		if(isSubmit){
+			tipShow("#refundLoadDiv");
+		}
+		return isSubmit;
+	});
+	
+	$("#form111").find("[reg2]").blur(function(){
+		//获得输入的值
+		var val = $(this).val();
+		//获得正则表达式
+		var reg = $(this).attr("reg2");
+		//获得提示信息
+		var tip = $(this).attr("tip");
+		//创建正则表达式的对象
+		var regExp = new RegExp(reg);
+		if(!regExp.test($.trim(val))){
+			$(this).next("span").html("<font color='red'>"+tip+"</font>");
+		}else{
+			var inputName = $(this).attr("name");
+			if(inputName == "brandName"){
+				var result = validBrandName(val);
+				if(result == "yes"){
+					$(this).next("span").html("<font color='red'>品牌名称已经存在</font>");
 					isSubmit = false;
 					return false;
 				}else{
 					$(this).next("span").html("");
 				}
 			}
-			
-		});
-		
-		if(isSubmit){
-			tipShow("staticLoadDiv");
-			//$("#button1").attr("disabled","disabled");
 		}
-		return isSubmit;
-	});
+	})
 	
-	$("#form111").find("[reg2]").blur(function(){
-		var regStr = $(this).attr("reg2");
-		var reg = new RegExp(regStr);
-		var tip = $(this).attr("tip");
-		var val = $.trim($(this).val());
-		var name = $(this).attr("name");
-		var input = $(this);
-		if(!reg.test(val)){
-			$(this).next("span").html(tip);
-			//中断each使用return false,不能使用return;和break;
-		}else{
-			if(name == "brandName"){
-				$.ajax({
-					url:"${path}/brand/validateBrandName.do",
-					type:"post",
-					dataType:"text",
-					data:{
-						brandName:val
-					},
-					success:function(responseText){
-						if(responseText == "no"){
-							input.next("span").html("品牌名称不能重复");
-							isSubmit = false;
-							return false;
-						}
-					},
-					error:function(){
-						alert("系统错误");
-					}
-				});
-			}
-			$(this).next("span").html("");
-		}
-	});
 	$("#form111").find("[reg1]").blur(function(){
-		var regStr = $(this).attr("reg1");
-		var reg = new RegExp(regStr);
-		var tip = $(this).attr("tip");
-		var val = $.trim($(this).val());
-		if(val != null && val != ""){
-			if(!reg.test(val)){
-				$(this).next("span").html(tip);
-				//中断each使用return false,不能使用return;和break;
+			//获得输入的值
+			var val = $(this).val();
+			//获得正则表达式
+			var reg = $(this).attr("reg1");
+			//获得提示信息
+			var tip = $(this).attr("tip");
+			//创建正则表达式的对象
+			var regExp = new RegExp(reg);
+			if(val != null && $.trim(val) != "" && !regExp.test($.trim(val))){
+				$(this).next("span").html("<font color='red'>"+tip+"</font>");
 			}else{
 				$(this).next("span").html("");
 			}
-		}else{
-			$(this).next("span").html("");
-		}
-	});
-});
+		})
+})
+	
+//如果在方法中使用ajax的返回值作为方法的返回值一定要把ajax变成同步的	
+function validBrandName(brandName){
+	var result = "no";
+	var option = {
+			url:"${path}/brand/validBrandName.do",
+			type:"post",
+			async:false,
+			data:{
+				brandName:brandName
+			},
+			dataType:"text",
+			success:function(responseText){
+				result = responseText;
+			},
+			error:function(){
+				alert("系统错误");
+			}
+	};
+	$.ajax(option);
+	return result;
+}
 
 function submitUpload(){
-	
-	var opt = {
-		//重新指定form的action的值
-		url:"${path}/upload/uploadPic.do",
-		type:"post",
-		dateType:"text",
-		data:{
-			fileName:"imgsFile"
-		},
-		success:function(responseText){
-			var obj = $.parseJSON(responseText);
-			$("#imgsImgSrc").attr("src",obj.fullPath);
-			$("#imgs").val(obj.fileName);
+	var option = {
+			url:"${path}/upload/uploadPic.do",//如果不指定url那么就使用使用提交表单的url，如果指定就使用当前的url
+			dataType:"text",
+			success:function(responseText){
+				var jsonObj = $.parseJSON(responseText);
+				$("#imgsImgSrc").attr("src", jsonObj.realPath);
+				$("#imgs").val(jsonObj.relativePath);
+				
+			},
+			error:function(){
+				alert("系统错误");
+			}
 			
-		},
-		error:function(){
-			alert("系统错误");
-		}
-		
 	};
-	$("#form111").ajaxSubmit(opt);
+	$("#form111").ajaxSubmit(option);
 	
 }
 </script>
@@ -177,7 +168,7 @@ function submitUpload(){
             <p><label class="alg_t"><samp>*</samp>品牌LOGO：</label><img id='imgsImgSrc' src="" height="100" width="100" />
             </p>
              <p><label></label><input type='file' size='27' id='imgsFile' name='imgsFile' class="file" onchange='submitUpload()' /><span id="submitImgTip" class="pos">请上传图片宽为120px，高为50px，大小不超过100K。</span>
-                <input type='hidden' id='imgs' name='imgs' value='' reg2="^.+$" tip="亲！您忘记上传图片了。" />
+                <input type='hidden' id='imgs' name='imgs' value='' reg2="^.+$" tip="亲！您忘记上传图片了。" /><span></span>
 			</p> 
 				
 			<p><label>品牌网址：</label><input type="text" name="website" class="text state" maxlength="100"  tip="请以http://开头" reg1="http:///*"/>

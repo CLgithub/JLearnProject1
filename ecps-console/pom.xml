@@ -20,6 +20,12 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		
+		<!-- log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -37,6 +43,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
+		
 		<!-- spring相关 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -46,16 +53,13 @@
 		    <groupId>org.springmodules</groupId>
 		    <artifactId>spring-modules-validation</artifactId>
 		</dependency>
+		
 		<!-- jstl -->
 		<dependency>
 		    <groupId>jstl</groupId>
 		    <artifactId>jstl</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging-api</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
@@ -75,9 +79,6 @@
 		    <artifactId>sitemesh</artifactId>
 		</dependency>
 		
-		
-		
 	</dependencies>
-	
 	
 </project>

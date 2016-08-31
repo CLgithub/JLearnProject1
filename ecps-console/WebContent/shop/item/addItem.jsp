@@ -14,9 +14,8 @@ $(document).ready(function(){
    
 		var fck = new FCKeditor("itemDesc");
 		fck.BasePath = "${path}/ecps/console/res/plugins/fckeditor/";
-		fck.Config["ImageUploadURL"] = "${path}/upload/uploadForFck.do?typeStr=Image";
+		fck.Config["ImageUploadURL"] = "${path}/upload/uploadForFck.do";
 		fck.Height = 400;
-		fck.ToolbarSet = "Basic";
 		fck.ReplaceTextarea();
       
 
@@ -209,10 +208,25 @@ function clickRemove(id){
 
 
 
+	function submitUpload(){
+		var option = {
+				url:"${path}/upload/uploadPic.do",//如果不指定url那么就使用使用提交表单的url，如果指定就使用当前的url
+				dataType:"text",
+				success:function(responseText){
+					var jsonObj = $.parseJSON(responseText);
+					$("#imgsImgSrc").attr("src", jsonObj.realPath);
+					$("#imgs").val(jsonObj.relativePath);
+					
+				},
+				error:function(){
+					alert("系统错误");
+				}
+				
+		};
+		$("#myForm").ajaxSubmit(option);
+		
+	}
 
-function submitImgSize1Upload() {
-
-}
 </script>
 </head>
 <body id="main">
@@ -232,15 +246,8 @@ function submitImgSize1Upload() {
 <a href="javascript:void(0);" ref="#tab_4" title="商品规格" class="nor">商品规格</a>
 </span></h2>
 <div id="tab_1" class="edit set">
-    <c:if test="${message!= null}">
-    <div id="errorName" name="errorName" align="Center">
-                <img src="${path}/images/iconWarning.gif" alt="<fmt:message key='icon.warning'/>" class="icon"/>
-              <font size="4" color="red">输入的内容包含敏感词,请重新输入</font>
-    <script>if('${message}'!=null){$('#errorName').fadeOut(4000)}</script>
-    </div>
-    </c:if>
-    <input type="hidden" name="itemId" id="itemId" value="${ebItem.itemId}"/>
-	<p><label><samp>*</samp>商品名称：</label><input type="text" reg1="^(.{1,100})$" desc="100以内任意字符" id="itemName" name="itemName" class="text state" value="${ebItem.itemName}"  maxlength="100"/></p>
+   
+	<p><label><samp>*</samp>商品名称：</label><i+nput type="text" reg1="^(.{1,100})$" desc="100以内任意字符" id="itemName" name="itemName" class="text state" value="${ebItem.itemName}"  maxlength="100"/></p>
 	<input type="hidden" id="catId" name="catId" value="1" />
 	<p><label>商品品牌：</label>
 	<select id="brandId" name="brandId">
@@ -267,13 +274,11 @@ function submitImgSize1Upload() {
     	<input  name="isGood" type="checkbox" value="1" />推荐&nbsp;&nbsp;
     	<input  name="isHot" type="checkbox" value="1" />热卖
     </p>
-    <a name="uploadImgs" id="uploadImgs"></a>
     <p><label><samp>*</samp>上传商品图片(90x150尺寸)：</label><span id="uploadImgTip1" class="orange">注:该尺寸图片必须为90x150。</span></p>
     <p><label></label>
-		<img id='imgSize1ImgSrc' src='${path}/ecps/console/images/logo266x64.png'  height="100" width="100" />
-		<input type='file' id='imgSize1File' name='imgSize1File' class="file" onchange='submitImgSize1Upload()' /><span class="pos" id="imgSize1FileSpan">请上传图片的大小不超过3MB</span>
-		<input type='hidden' id='imgSize1Action' name='imgSize1Action' value='${path}/uploads/upload_pic.do' />
-        <input type='hidden' id='imgSize1' name='imgSize1' value='' reg="^.+$" tip="亲！您忘记上传图片了。" />
+		<img id='imgsImgSrc' src='${path}/ecps/console/images/logo266x64.png'  height="100" width="100" />
+		<input type='file' id='imgSize1File' name='imgSize1File' class="file" onchange='submitUpload()' /><span class="pos" id="imgSize1FileSpan">请上传图片的大小不超过3MB</span>
+        <input type='hidden' id='imgs' name='imgs' value='' reg="^.+$" tip="亲！您忘记上传图片了。" />
 	</p>
 	
 	
@@ -284,8 +289,6 @@ function submitImgSize1Upload() {
 	</p>
 	<p><label class="alg_t">页面描述：</label><textarea  id="pageDesc" reg1="^(.|\n){0,130}$" desc="130个以内的任意字符" name="pageDesc" class="are" rows="6" cols="45">${ebItem.pageDesc}</textarea>
 	</p>
-    <input type="hidden" name="auditStatus" value="0" />
-    <input type="hidden" name="showStatus" value="1" />
 </div>
 
 <div id="tab_2" class="edit" style="display: none">
@@ -294,33 +297,33 @@ function submitImgSize1Upload() {
 </div>
 
 <div id="tab_3" class="edit set" style="display: none">
-    <c:if test="${fn:length(paraList) == 0}">
+    <c:if test="${fn:length(commList) == 0}">
     <p><label></label>无属性</p>
     </c:if>
-	    <c:forEach items="${paraList }" var="para">
-	    	<p><label>${para.featureName}：</label>
-		    	<c:if test="${para.inputType == 1 }">
-		    		<select name="${para.featureId }">
+	    <c:forEach items="${commList }" var="comm">
+	    	<p><label>${comm.featureName}：</label>
+		    	<c:if test="${comm.inputType == 1 }">
+		    		<select name="${comm.featureId }">
 		    			<option value="">请选择</option>
-		    			<c:forEach items="${para.selectValues }" var="val">
+		    			<c:forEach items="${comm.selectValues }" var="val">
 		    				<option value="${val }">${val }</option>
 		    			</c:forEach>
 		    		</select>
 		    	</c:if>
-		    	<c:if test="${para.inputType == 2 }">
-		    		<input type="radio" name="${para.featureId }" value="" checked="checked">无&nbsp;
-		    		<c:forEach items="${para.selectValues }" var="val">
-		    			<input type="radio" name="${para.featureId }" value="${val }">${val }&nbsp;
+		    	<c:if test="${comm.inputType == 2 }">
+		    		<input type="radio" name="${comm.featureId }" value="" checked="checked">无&nbsp;
+		    		<c:forEach items="${comm.selectValues }" var="val">
+		    			<input type="radio" name="${comm.featureId }" value="${val }">${val }&nbsp;
 		    		</c:forEach>
 		    		
 		    	</c:if>
-		    	<c:if test="${para.inputType == 3 }">
-		    		<c:forEach items="${para.selectValues }" var="val">
-		    			<input type="checkbox" name="${para.featureId }" value="${val }">${val }&nbsp;
+		    	<c:if test="${comm.inputType == 3 }">
+		    		<c:forEach items="${comm.selectValues }" var="val">
+		    			<input type="checkbox" name="${comm.featureId }" value="${val }">${val }&nbsp;
 		    		</c:forEach>
 		    	</c:if>
-		    	<c:if test="${para.inputType == 4 }">
-		    		<input type="text" name="${para.featureId }" value="">
+		    	<c:if test="${comm.inputType == 4 }">
+		    		<input type="text" name="${comm.featureId }" value="">
 		    	</c:if>
 		    	
 	    	</p>

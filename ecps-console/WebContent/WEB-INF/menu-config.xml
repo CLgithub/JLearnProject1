@@ -15,6 +15,7 @@
         <Menu name="RelationShipMgmtMenu" title="合作伙伴管理" page="/shop/relational/index.jsp"  />
         <Menu name="PaymentMgmtMenu" title="支付管理" page="/shop/payment/index.jsp" />
         <Menu name="AdvertisementMenu" title="广告管理" page="/shop/advertisement/index.jsp" />
+        <Menu name="studentMenu2" title="学生管理2" page="/shop/student2/index.jsp" />
         <!-- 辽宁2期屏蔽该功能 -->
         <!-- <Menu name="PromotionMenu" title="促销活动" page="/shop/promotion/index.jsp" /> -->
         <Menu name="SystemSet" title="系统配置" page="/shop/contentset/index.jsp" />
