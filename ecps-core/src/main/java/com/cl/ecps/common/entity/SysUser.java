@@ -70,4 +70,12 @@ public class SysUser {
     public void setSysdepcode(Integer sysdepcode) {
         this.sysdepcode = sysdepcode;
     }
+
+	@Override
+	public String toString() {
+		return "SysUser [id=" + id + ", name=" + name + ", loginname=" + loginname + ", password=" + password
+				+ ", number=" + number + ", status=" + status + ", sysdepcode=" + sysdepcode + "]";
+	}
+    
+    
 }
