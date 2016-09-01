@@ -15,16 +15,21 @@
 	<!-- 只扫描controller -->
 	<context:component-scan base-package="com.cl.ecps.*.controller" />
 
-	<!-- 第二种配置方法， 开始 -->
-	<!-- <mvc:interceptors>
-		注册捕获rul拦截器bean
-		<bean id="CatchUrlInterceptor" class="com.cl.ecps.common.interceptor.CatchUrlInterceptor" />
-		注册自定义权限拦截器bean
-		<bean id="RightInterceptor" class="com.cl.ecps.common.interceptor.RightInterceptor" />
-	</mvc:interceptors> -->
-	
-	<mvc:annotation-driven />
-	<!-- 第二种配置方法 结束 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">  
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">  
+						<property name="dateFormat">  
+							<bean class="java.text.SimpleDateFormat">  
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />  
+							</bean>  
+						</property>  
+					</bean>  
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 	<!-- 配置视图解析器 -->
 	<bean id="viewResolver"
