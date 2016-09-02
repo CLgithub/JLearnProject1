@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.cl.ecps.common.entity.SysUser;
+import com.cl.ecps.common.uitl.PageBean;
 import com.cl.ecps.system.service.SysUserService;
 
 public class Test2 {
@@ -18,13 +19,21 @@ public class Test2 {
 	public static void setUpBeforeClass() throws Exception {
 		applicationContext=new ClassPathXmlApplicationContext("spring-context.xml");
 //		applicationContext=new FileSystemXmlApplicationContext("E:/clProject/ecps-parent1110/ecps-core/src/main/resources/spring-context.xml");
-		sysUserService=(SysUserService) applicationContext.getBean("sysUserServiceImpl");
+		sysUserService=(SysUserService) applicationContext.getBean("sysUserService");
 	}
 
 	@Test
 	public void test() {
 		SysUser sysUser = sysUserService.selectByPrimaryKey(23);
 		System.out.println(sysUser);
+	}
+	
+	@Test
+	public void test2() {
+		SysUser sysUser = new SysUser();
+//		sysUser.setName("a");
+		PageBean pageBean = sysUserService.getUserPBBySearch(1, 1, sysUser);
+		System.out.println(pageBean);
 	}
 	
 

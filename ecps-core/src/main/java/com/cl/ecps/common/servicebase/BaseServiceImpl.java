@@ -4,7 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import javax.annotation.Resource;
 import com.cl.ecps.common.mapperbase.BaseMapper;
 
-public class BaseServiceImpl<T> implements BaseService<T> {
+public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	private BaseMapper<T> baseMapper;
 

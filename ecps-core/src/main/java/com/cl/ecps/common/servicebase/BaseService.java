@@ -1,5 +1,10 @@
 package com.cl.ecps.common.servicebase;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.cl.ecps.common.uitl.PageBean;
+
 public interface BaseService<T> {
 
 	/**
@@ -32,6 +37,7 @@ public interface BaseService<T> {
 	 */
 	T selectByPrimaryKey(Integer id);
 
-	
+
+
 
 }
