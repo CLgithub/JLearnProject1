@@ -10,10 +10,10 @@ public interface SysUserService extends BaseService<SysUser> {
 	 * 根据条件分页查看用户
 	 * @author L
 	 * @date 2016年9月2日
-	 * @param page 第几页
-	 * @param rows 每页多少条
+	 * @param currentPage 第几页
+	 * @param pageSize 每页多少条
 	 * @return pageBean
 	 */
-	PageBean getUserPBBySearch(int page, int rows, SysUser sysUser);
+	PageBean getUserPBBySearch(int currentPage, int pageSize, SysUser sysUser);
 
 }

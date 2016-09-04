@@ -1,6 +1,8 @@
 package com.cl.ecps.common.entity;
 
-public class SysUser {
+public class SysUser extends BaseEntity {
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 
 	private String name;
@@ -69,12 +71,6 @@ public class SysUser {
 
 	public void setSysdepcode(Integer sysdepcode) {
 		this.sysdepcode = sysdepcode;
-	}
-
-	@Override
-	public String toString() {
-		return "SysUser [id=" + id + ", name=" + name + ", loginname=" + loginname + ", password=" + password
-				+ ", number=" + number + ", status=" + status + ", sysdepcode=" + sysdepcode + "]";
 	}
 
 }

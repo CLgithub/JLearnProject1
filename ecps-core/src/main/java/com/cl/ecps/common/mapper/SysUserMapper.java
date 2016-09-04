@@ -1,7 +1,7 @@
 package com.cl.ecps.common.mapper;
 
 import java.util.List;
-
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import com.cl.ecps.common.entity.SysUser;
 import com.cl.ecps.common.mapperbase.BaseMapper;
@@ -17,7 +17,7 @@ public interface SysUserMapper extends BaseMapper<SysUser>{
 	 * @param sysUser 
 	 * @return
 	 */
-	List<SysUser> getTListBySearch(@Param("beginIndex")Integer beginIndex,@Param("len")Integer len, @Param("sysUser")SysUser sysUser);
+	List<Map<?,?>> getTListBySearch(@Param("beginIndex")Integer beginIndex,@Param("len")Integer len, @Param("sysUser")SysUser sysUser);
 
 	/**
 	 * 根据条件查询总用户数

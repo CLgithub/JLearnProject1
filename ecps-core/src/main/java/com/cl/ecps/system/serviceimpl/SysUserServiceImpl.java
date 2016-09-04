@@ -1,6 +1,7 @@
 package com.cl.ecps.system.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -25,13 +26,15 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	private SysUserMapper sysUserMapper;
 
 	@Override
-	public PageBean getUserPBBySearch(int page, int rows, SysUser sysUser) {
-		Integer allRow = sysUserMapper.getAllRow(sysUser);
-		Integer beginIndex = (page - 1) * rows;
-		List<SysUser> list = sysUserMapper.getTListBySearch(beginIndex,rows,sysUser);
+	public PageBean getUserPBBySearch(int currentPage, int pageSize, SysUser sysUser) {
+		Integer total = sysUserMapper.getAllRow(sysUser);
+		List<Map<?, ?>> rows = sysUserMapper.getTListBySearch(PageBean.countOffset(pageSize, currentPage),pageSize,sysUser);
 		PageBean pageBean = new PageBean();
-		pageBean.setTotal(allRow);
-		pageBean.setRows(list);
+		pageBean.setTotal(total);
+		pageBean.setRows(rows);
+		pageBean.setTotalPage(PageBean.countTatalPage(pageSize, total));
+		pageBean.setCurrentPage(currentPage);
+		pageBean.setPageSize(pageSize);
 		return pageBean;
 	}
 

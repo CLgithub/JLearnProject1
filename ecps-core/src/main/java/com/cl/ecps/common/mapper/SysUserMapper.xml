@@ -123,6 +123,9 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 
+	<sql id="Base_Column_List_2">
+		id, name, loginname, number, su.status as status, sysdepcode, depname
+	</sql>
 	<sql id="sqlWhere1" >
 		<if test="sysUser.name!=null">
 			and name like '%${sysUser.name}%' 
@@ -132,17 +135,18 @@
 		</if>
 	</sql>
 	<!-- 查询对应条数的用户列表 -->
-	<select id="getTListBySearch" resultMap="BaseResultMap" >
+	<select id="getTListBySearch" resultType="java.util.Map" >
 		select
-		<include refid="Base_Column_List" />
-		from sys_user 
+		<include refid="Base_Column_List_2" />
+		from sys_user su left join sys_department sd on su.sysDepCode=sd.depCode
 		<where>
 			<include refid="sqlWhere1" />
 		</where>
 		limit #{beginIndex},#{len}
 	</select>
 	<select id="getAllRow" resultType="java.lang.Integer" >
-		select count(1) from sys_user
+		select count(1) 
+		from sys_user su left join sys_department sd on su.sysDepCode=sd.depCode
 		<where>
 			<include refid="sqlWhere1" />
 		</where>

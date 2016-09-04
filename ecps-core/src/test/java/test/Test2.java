@@ -32,7 +32,7 @@ public class Test2 {
 	public void test2() {
 		SysUser sysUser = new SysUser();
 //		sysUser.setName("a");
-		PageBean pageBean = sysUserService.getUserPBBySearch(1, 1, sysUser);
+		PageBean pageBean = sysUserService.getUserPBBySearch(1, 5, sysUser);
 		System.out.println(pageBean);
 	}
 	
