@@ -127,16 +127,16 @@
 		id, name, loginname, number, su.status as status, sysdepcode, depname
 	</sql>
 	<sql id="sqlWhere1" >
-		<if test="sysUser.name!=null">
-			and name like concat('%', #{sysUser.name}, '%')
+		<if test="t.name!=null">
+			and name like concat('%', #{t.name}, '%')
 			<!-- oracle 		like '%' || #{name} || '%' -->
 			<!-- SQLserver 		like '%' + #{name} + '%' -->
 		</if>
-		<if test="sysUser.loginname!=null">
-			and loginname like concat('%', #{sysUser.loginname}, '%')
+		<if test="t.loginname!=null">
+			and loginname like concat('%', #{t.loginname}, '%')
 		</if>
-		<if test="sysUser.number!=null">
-			and number like concat('%', #{sysUser.number}, '%')
+		<if test="t.number!=null">
+			and number like concat('%', #{t.number}, '%')
 		</if>
 	</sql>
 	<!-- 查询对应条数的用户列表 -->

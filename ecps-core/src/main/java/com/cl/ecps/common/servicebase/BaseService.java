@@ -1,8 +1,9 @@
 package com.cl.ecps.common.servicebase;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.cl.ecps.common.entity.EbBrand;
 import com.cl.ecps.common.uitl.PageBean;
 
 public interface BaseService<T> {
@@ -36,7 +37,16 @@ public interface BaseService<T> {
 	 * 根据id查询单个实体
 	 */
 	T selectByPrimaryKey(Integer id);
+	
 
+	/**
+	 * 得到pageBean
+	 * @param currentPage 第几页
+	 * @param pageSize 每页多少条记录
+	 * @param t 条件封装
+	 * @return pageBean
+	 */
+	PageBean getPageBean(int currentPage, int pageSize, T t);
 
 
 

@@ -1,7 +1,11 @@
 package com.cl.ecps.common.mapperbase;
 
-public interface BaseMapper<T> {
+import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 
+public interface BaseMapper<T> {
+	
 	/**
 	 * 增
 	 */
@@ -32,4 +36,18 @@ public interface BaseMapper<T> {
 	 */
 	T selectByPrimaryKey(Integer id);
 
+	/**
+	 * 查询满足条件的记录条数
+	 * @param t 条件封装
+	 * @return 记录条数
+	 */
+	Integer getAllRow(@Param("t")T t);
+
+	/**
+	 * 查询满足条件的记录
+	 * @param pageSize 
+	 * @param i 
+	 * @return
+	 */
+	List<Map<?, ?>> getTListBySearch(@Param("beginIndex")Integer beginIndex,@Param("len")Integer len, @Param("t")T t);
 }

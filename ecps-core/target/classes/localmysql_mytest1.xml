@@ -46,7 +46,7 @@
 		</javaClientGenerator>
 
 		<!-- 要对那些数据表进行生成操作，必须要有一个. -->
-		<table schema="mytest1" tableName="sys_user" domainObjectName="SysUser"
+		<table schema="ecps" tableName="EbBrand" domainObjectName="EbBrand"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"

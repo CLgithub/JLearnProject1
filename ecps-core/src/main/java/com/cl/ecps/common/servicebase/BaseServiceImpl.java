@@ -1,8 +1,11 @@
 package com.cl.ecps.common.servicebase;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import com.cl.ecps.common.mapperbase.BaseMapper;
+import com.cl.ecps.common.uitl.PageBean;
 
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
@@ -42,6 +45,19 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public T selectByPrimaryKey(Integer id) {
 		return baseMapper.selectByPrimaryKey(id);
+	}
+
+	
+	public PageBean getPageBean(int currentPage, int pageSize, T t) {
+		Integer total = baseMapper.getAllRow(t);
+		List<Map<?, ?>> rows = baseMapper.getTListBySearch(PageBean.countOffset(pageSize, currentPage), pageSize, t);
+		PageBean pageBean = new PageBean();
+		pageBean.setTotal(total);
+		pageBean.setRows(rows);
+		pageBean.setTotalPage(PageBean.countTatalPage(pageSize, total));
+		pageBean.setCurrentPage(currentPage);
+		pageBean.setPageSize(pageSize);
+		return pageBean;
 	}
 
 }

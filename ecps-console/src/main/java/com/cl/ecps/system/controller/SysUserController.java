@@ -24,13 +24,12 @@ public class SysUserController {
 	 */
 	@RequestMapping("toUserList")
 //	@ResponseBody
-	public String toUserList(Model model,
+	public String toUserList(
+			Model model,
 			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
 			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
 			SysUser user
 		){
-		System.out.println(currentPage);
-		System.out.println(pageSize);
 		PageBean pageBean = sysUserService.getUserPBBySearch(currentPage, pageSize, user);
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("user",user);

@@ -27,15 +27,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 	@Override
 	public PageBean getUserPBBySearch(int currentPage, int pageSize, SysUser sysUser) {
-		Integer total = sysUserMapper.getAllRow(sysUser);
-		List<Map<?, ?>> rows = sysUserMapper.getTListBySearch(PageBean.countOffset(pageSize, currentPage),pageSize,sysUser);
-		PageBean pageBean = new PageBean();
-		pageBean.setTotal(total);
-		pageBean.setRows(rows);
-		pageBean.setTotalPage(PageBean.countTatalPage(pageSize, total));
-		pageBean.setCurrentPage(currentPage);
-		pageBean.setPageSize(pageSize);
-		return pageBean;
+		return this.getPageBean(currentPage, pageSize, sysUser);
 	}
 
 }
