@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.cl.ecps.common.entity.SysUser;
 import com.cl.ecps.common.uitl.PageBean;
 import com.cl.ecps.system.service.SysUserService;
@@ -22,11 +24,16 @@ public class SysUserController {
 	 */
 	@RequestMapping("toUserList")
 //	@ResponseBody
-	public String toUserList(Model model,Integer currentPage, Integer pageSize,SysUser user){
-		currentPage=currentPage==null?1:currentPage;
-		pageSize=pageSize==null?10:pageSize;
+	public String toUserList(Model model,
+			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
+			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
+			SysUser user
+		){
+		System.out.println(currentPage);
+		System.out.println(pageSize);
 		PageBean pageBean = sysUserService.getUserPBBySearch(currentPage, pageSize, user);
 		model.addAttribute("pageBean", pageBean);
+		model.addAttribute("user",user);
 		return "/system/userList";
 	}
 }

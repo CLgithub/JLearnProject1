@@ -128,10 +128,15 @@
 	</sql>
 	<sql id="sqlWhere1" >
 		<if test="sysUser.name!=null">
-			and name like '%${sysUser.name}%' 
+			and name like concat('%', #{sysUser.name}, '%')
+			<!-- oracle 		like '%' || #{name} || '%' -->
+			<!-- SQLserver 		like '%' + #{name} + '%' -->
+		</if>
+		<if test="sysUser.loginname!=null">
+			and loginname like concat('%', #{sysUser.loginname}, '%')
 		</if>
 		<if test="sysUser.number!=null">
-			and number like '%${sysUser.number}%' 
+			and number like concat('%', #{sysUser.number}, '%')
 		</if>
 	</sql>
 	<!-- 查询对应条数的用户列表 -->

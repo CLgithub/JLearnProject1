@@ -31,7 +31,7 @@ public class Test2 {
 	@Test
 	public void test2() {
 		SysUser sysUser = new SysUser();
-//		sysUser.setName("a");
+		sysUser.setName("a");
 		PageBean pageBean = sysUserService.getUserPBBySearch(1, 5, sysUser);
 		System.out.println(pageBean);
 	}
