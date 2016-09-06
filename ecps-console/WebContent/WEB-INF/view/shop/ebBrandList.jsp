@@ -8,8 +8,7 @@
 <title>商品类别列表页</title>
 </head>
 <body>
-	${pageBean}
-	<%-- ${user} --%>
+	<a href="<%=path%>/ebBrandController/toAddbrand.action">添加</a>
 	<form id="form1">
 	<%--姓名：<input type="text" name="name" value="${user.name}" >
 		登录名：<input type="text" name="loginname" value="${user.loginname}" >
@@ -19,11 +18,13 @@
 				<tr>
 					<th width="50"><input type="checkbox" id="allCB" /></th>
 					<th width="50">序号</th>
-					<th>姓名</th>
-					<th>登录名</th>
-					<th>号码</th>
-					<th>所属部门</th>
-					<th>所属部门</th>
+					<th>品牌编号</th>
+					<th>品牌图片</th>
+					<th>品牌名称</th>
+					<th>品牌地址</th>
+					<th>品牌描述</th>
+					<th width="10%">排序</th>
+					<th width="10%">操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,11 +32,13 @@
 					<tr>
 						<td><input type="checkbox" name="cb" /></td>
 						<td>${vs.count}</td>
-						<td>${v.brandName}</td>
-						<td>${v.brandDesc}</td>
+						<td>${v.brandId}</td>
 						<td>${v.imgs}</td>
+						<td>${v.brandName}</td>
 						<td>${v.website}</td>
+						<td>${v.brandDesc}</td>
 						<td>${v.brandsort}</td>
+						<td><a href="#">修改</a>/<a href="#">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

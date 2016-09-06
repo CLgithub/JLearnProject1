@@ -128,8 +128,8 @@
 	<select id="getAllRow" resultType="java.lang.Integer" >
 		select count(1) 
 		from EbBrand
-		<where>
+		<!-- <where>
 			<include refid="sqlWhere1" />
-		</where>
+		</where> -->
 	</select>
 </mapper>

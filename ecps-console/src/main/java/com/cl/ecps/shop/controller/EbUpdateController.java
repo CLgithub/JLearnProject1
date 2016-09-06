@@ -1,0 +1,55 @@
+package com.cl.ecps.shop.controller;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.cl.ecps.common.uitl.DataUtil;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.UniformInterfaceException;
+import com.sun.jersey.api.client.WebResource;
+
+@Controller
+@RequestMapping("ebUpdateController")
+public class EbUpdateController {
+	
+	@RequestMapping("updateFile")
+	public void updateFile(Model model,HttpServletRequest request,HttpServletResponse response) throws UniformInterfaceException, IOException{
+		upLoad1(model,request,response);
+	}
+
+	private void upLoad1(Model model,HttpServletRequest request,HttpServletResponse response) throws UniformInterfaceException, IOException {
+		// 得到上传文件
+		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> fileMap = mRequest.getFileMap();
+		Set<String> keySet = fileMap.keySet();
+		Iterator<String> iterator = keySet.iterator();
+		String key = iterator.next();
+		MultipartFile mFile = fileMap.get(key);
+		// 设置文件存储路径
+		String fileName = mFile.getOriginalFilename();
+		String filePath = (String) DataUtil.readProp("file_path");
+		String relativePath = "/upLoadFile/" + fileName;	//相对路径
+		String realPath = filePath + "/upLoadFile/" + fileName;	//绝对路径
+		// 存储文件
+		//创建jersy的客户端
+		Client client = Client.create();
+		//创建web资源对象
+		WebResource wResource = client.resource(realPath);
+		wResource.put(mFile.getBytes());
+		
+		//将地址返回页面
+		model.addAttribute("relativePath", relativePath);
+		model.addAttribute("realPath", realPath);
+	}
+}

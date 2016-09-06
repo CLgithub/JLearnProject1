@@ -59,6 +59,24 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 		
+		<!-- 上传文件工具 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		
+		<!-- webservice工具 -->
+		<dependency>
+		    <groupId>com.sun.jersey</groupId>
+		    <artifactId>jersey-client</artifactId>
+		</dependency>
+		
+		<!-- json -->
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		</dependency>
+		
 	</dependencies>
 	
 </project>

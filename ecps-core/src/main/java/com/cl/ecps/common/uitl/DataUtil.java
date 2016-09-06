@@ -2,6 +2,8 @@ package com.cl.ecps.common.uitl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
@@ -228,4 +231,15 @@ public class DataUtil {
 		return list2;
 	}
 
+	public static Object readProp(String key){
+		try {
+			InputStream inputStream = DataUtil.class.getClassLoader().getResourceAsStream("system.properties");
+			Properties properties = new Properties();
+			properties.load(inputStream);
+			return properties.get(key);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

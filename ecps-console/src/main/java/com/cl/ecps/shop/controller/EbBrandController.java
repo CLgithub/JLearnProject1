@@ -30,5 +30,11 @@ public class EbBrandController {
 		model.addAttribute("ebBrand", ebBrand);
 		return "/shop/ebBrandList";
 	}
+	
+	
+	@RequestMapping("toAddbrand")
+	public String toAddbrand(){
+		return "/shop/addBrand";
+	}
 
 }

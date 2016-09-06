@@ -8,6 +8,7 @@
 <html>
 <head>
 <script src="<%=basePath%>bootstrap-3.3.7-dist/jquery/jquery.min-1.12.1.js"></script>
+<script src="<%=basePath%>bootstrap-3.3.7-dist/jquery/jquery.form.js"></script>
 <link href="<%=basePath%>bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="<%=basePath%>bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 

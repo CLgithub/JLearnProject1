@@ -1,6 +1,6 @@
 package com.cl.ecps.common.entity;
 
-public class EbBrand extends BaseEntity{
+public class EbBrand extends BaseEntity {
 	private Integer brandid;
 	private String brandname;
 	private String branddesc;
