@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -19,16 +20,21 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping("ebUpdateController")
 public class EbUpdateController {
 	
+//	@RequestMapping(value="updateFile",produces={"application/json;charset=UTF-8"})
 	@RequestMapping("updateFile")
-	public void updateFile(Model model,HttpServletRequest request,HttpServletResponse response) throws UniformInterfaceException, IOException{
-		upLoad1(model,request,response);
+	@ResponseBody
+	public Object updateFile(Model model,HttpServletRequest request,HttpServletResponse response) throws UniformInterfaceException, IOException{
+//		response.setContentType("text/html; charset=utf-8");
+		return upLoad1(model,request,response);
 	}
 
-	private void upLoad1(Model model,HttpServletRequest request,HttpServletResponse response) throws UniformInterfaceException, IOException {
+	private Object upLoad1(Model model,HttpServletRequest request,HttpServletResponse response) throws UniformInterfaceException, IOException {
 		// 得到上传文件
 		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = mRequest.getFileMap();
@@ -47,9 +53,11 @@ public class EbUpdateController {
 		//创建web资源对象
 		WebResource wResource = client.resource(realPath);
 		wResource.put(mFile.getBytes());
-		
 		//将地址返回页面
-		model.addAttribute("relativePath", relativePath);
-		model.addAttribute("realPath", realPath);
+//		response.getWriter().write(realPath);
+		JSONObject jo = new JSONObject();
+		jo.accumulate("realPath", realPath);
+		jo.accumulate("relativePath", relativePath);
+		return jo;
 	}
 }
