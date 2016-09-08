@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cl.ecps.common.entity.SysUser;
 import com.cl.ecps.common.uitl.PageBean;
@@ -34,5 +35,18 @@ public class SysUserController {
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("user",user);
 		return "/system/userList";
+	}
+	
+	/**
+	 * 查询用户
+	 */
+	@RequestMapping("getPBBySearch")
+	@ResponseBody
+	public Object getPBBySearch(
+			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
+			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
+			SysUser sysUser){
+		System.out.println(sysUser);
+		return sysUserService.getUserPBBySearch(currentPage, pageSize, sysUser);
 	}
 }

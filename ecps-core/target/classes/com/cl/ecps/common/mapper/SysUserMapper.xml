@@ -157,5 +157,11 @@
 		</where>
 	</select>
 	
+	<select id="findUser"  resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from sys_user
+		where loginName=#{loginName} and password=#{password}
+	</select>	
 	
 </mapper>

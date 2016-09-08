@@ -1,8 +1,5 @@
 package com.cl.ecps.system.serviceimpl;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -28,6 +25,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Override
 	public PageBean getUserPBBySearch(int currentPage, int pageSize, SysUser sysUser) {
 		return this.getPageBean(currentPage, pageSize, sysUser);
+	}
+
+	@Override
+	public SysUser doLogin(String loginName, String password) {
+		return sysUserMapper.findUser(loginName,password);
 	}
 
 }

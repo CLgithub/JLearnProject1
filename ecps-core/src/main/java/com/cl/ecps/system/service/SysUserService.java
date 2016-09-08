@@ -16,4 +16,14 @@ public interface SysUserService extends BaseService<SysUser> {
 	 */
 	PageBean getUserPBBySearch(int currentPage, int pageSize, SysUser sysUser);
 
+	/**
+	 * 用户登录
+	 * @author L
+	 * @date 2016年9月8日
+	 * @param loginName
+	 * @param password
+	 * @return
+	 */
+	SysUser doLogin(String loginName, String password);
+
 }

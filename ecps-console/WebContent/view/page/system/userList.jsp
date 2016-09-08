@@ -11,8 +11,8 @@
 	<%-- ${pageBean}
 	${user} --%>
 	<form id="form1">
-		姓名：<input type="text" name="name" value="${user.name}" >
-		登录名：<input type="text" name="loginname" value="${user.loginname}" >
+		姓名：<input type="text" name="name" id="name" value="" >
+		登录名：<input type="text" name="loginname" id="loginname" value="" >
 		<input type="button" value="查询" id="searchB">
 		<table class="table table-hover table-striped " id="mainTable" width="100%">
 			<thead>
@@ -27,26 +27,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${pageBean.rows}" var="v" varStatus="vs">
-					<tr>
-						<td><input type="checkbox" name="cb" /></td>
-						<td>${vs.count}</td>
-						<td>${v.name}</td>
-						<td>${v.loginname}</td>
-						<td>${v.number}</td>
-						<td>${v.depname}</td>
-						<td>${v.status}</td>
-					</tr>
-				</c:forEach>
 			</tbody>
 		</table>
 		<!--------------------------分页条开始-------------------->
-		<ul class="pagination pagination-sm" >
-			<li><span>共${pageBean.total}条</span></li>
+		<ul class="pagination pagination-sm" id="fyt" >
+			<li><span id="total"></span></li>
 			<li>
 				<span>
 				每页显示
 				<select id="pageSize" name="pageSize" >
+					<option <c:if test="${pageBean.pageSize==1}">selected="selected"</c:if>>1</option>
+					<option <c:if test="${pageBean.pageSize==2}">selected="selected"</c:if>>2</option>
 					<option <c:if test="${pageBean.pageSize==5}">selected="selected"</c:if>>5</option>
 					<option <c:if test="${pageBean.pageSize==10}">selected="selected"</c:if>>10</option>
 					<option <c:if test="${pageBean.pageSize==15}">selected="selected"</c:if>>15</option>
@@ -54,13 +45,11 @@
 				条
 				</span>
 			</li>
-			<li><span>共${pageBean.totalPage}页</span></li>
+			<li><span id="totalPage"></span></li>
 			<li><span>
 			当前第
 				<select id="currentPage" name="currentPage" >
-					<c:forEach begin="1" end="${pageBean.totalPage}" varStatus="vs"   >
-						<option value="${vs.count}" <c:if test="${vs.count==pageBean.currentPage}">selected</c:if> >${vs.count}
-					</c:forEach>
+					
 				</select>
 			页</span></li>
 			<li><a href="#" id="first">首页</a></li>
@@ -81,12 +70,65 @@
 				item.checked=c;
 			});
 		});
-		
+		loadMain();
+		fy();
+	});
+	function loadMain(){
+		var cPage=$("#currentPage").val();
+		var pSize=$("#pageSize").val();
+		var name=$("#name").val();
+		var loginname=$("#loginname").val();
+		var data1={
+			currentPage:cPage,
+			pageSize:pSize,
+			loginname:loginname,
+			name:name
+		};
+		$.ajax({
+			url:"<%=path%>/sysUserController/getPBBySearch.action",
+			data:data1,
+			dataType:"text",
+			type:"post",
+			success:function(data){
+				var jsonObj = $.parseJSON(data);
+				var rows="";
+				for(var i=0;i<jsonObj.rows.length;i++){
+					rows+="<tr>"
+						+"<td><input type='checkbox' name='cb' /></td>"
+						+"<td>"+parseInt(i+1)+"</td>"
+						+"<td>"+jsonObj.rows[i].name+"</td>"
+						+"<td>"+jsonObj.rows[i].loginname+"</td>"
+						+"<td>"+jsonObj.rows[i].number+"</td>"
+						+"<td>"+jsonObj.rows[i].depname+"</td>"
+						+"<td>"+jsonObj.rows[i].status+"</td>"
+						+"</tr>";
+				}
+				$("#mainTable tbody").get(0).innerHTML=rows;
+				
+				//加载分页条
+				$("#total").text("共"+jsonObj.total+"条");
+				$("#totalPage").text("共"+jsonObj.totalPage+"页");
+				$("#totalPage").attr("value",jsonObj.totalPage);
+				var pages="";
+				for(var i=1;i<=jsonObj.totalPage;i++){
+					if(i==jsonObj.currentPage){
+						pages+='<option value="'+i+'" selected >'+i+'</option>'
+					}else{
+						pages+='<option value="'+i+'" >'+i+'</option>'
+					}
+				}
+				$("#currentPage").get(0).innerHTML=pages;
+			}
+		});
+	}
+	function fy(){
+		//翻页功能
 		$("#first,#last,#previous,#next,#searchB").click(function(){
 			if($(this).attr("id")=="first"){
 				$("#currentPage").val("1");
 			}else if($(this).attr("id")=="last"){
-				$("#currentPage").val("${pageBean.totalPage}");
+				var tPage=$("#totalPage").attr("value");
+				$("#currentPage").val(tPage);
 			}else if($(this).attr("id")=="previous"){
 				var cPage=$("#currentPage").val();
 				$("#currentPage").val(parseInt(cPage)-1);	//当不再currentPage可选范围时就会为null
@@ -94,21 +136,12 @@
 				var cPage=$("#currentPage").val();
 				$("#currentPage").val(parseInt(cPage)+1);
 			}
-			fun1();
+			loadMain();
 		});
 		$("#pageSize,#currentPage").change(function(){
-			fun1();
+			loadMain();
 		});
-		function fun1(){
-			var url="<%=path%>/sysUserController/toUserList.action";
-			var form1=$("#form1");
-			form1.attr("method","post");
-			form1.attr("action",url);
-			form1.submit();
-		}
-		
-		
-		
-	});
+	}
+	
 </script>
 </html>
