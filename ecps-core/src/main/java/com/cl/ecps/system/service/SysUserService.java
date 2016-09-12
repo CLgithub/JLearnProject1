@@ -25,5 +25,13 @@ public interface SysUserService extends BaseService<SysUser> {
 	 * @return
 	 */
 	SysUser doLogin(String loginName, String password);
+	
+	/**
+	 * 新增或修改用户
+	 * @author L
+	 * @date 2016年9月12日
+	 * @param sysUser
+	 */
+	boolean saverOrUpdate(SysUser sysUser);
 
 }

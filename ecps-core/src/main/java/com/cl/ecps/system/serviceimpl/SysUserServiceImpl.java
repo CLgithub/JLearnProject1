@@ -8,6 +8,8 @@ import com.cl.ecps.common.entity.SysUser;
 import com.cl.ecps.common.mapper.SysUserMapper;
 import com.cl.ecps.common.mapperbase.BaseMapper;
 import com.cl.ecps.common.servicebase.BaseServiceImpl;
+import com.cl.ecps.common.uitl.Constant;
+import com.cl.ecps.common.uitl.DataUtil;
 import com.cl.ecps.common.uitl.PageBean;
 import com.cl.ecps.system.service.SysUserService;
 
@@ -30,6 +32,23 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Override
 	public SysUser doLogin(String loginName, String password) {
 		return sysUserMapper.findUser(loginName,password);
+	}
+
+	@Override
+	public boolean saverOrUpdate(SysUser sysUser) {
+		if(null==sysUser.getId()){
+			sysUser.setPassword(DataUtil.md5(Constant.INITPASSWORD));
+			if(sysUserMapper.insert(sysUser)==1)
+				return true;
+			else
+				return false;
+		}else {
+			sysUser.setPassword(this.selectByPrimaryKey(sysUser.getId()).getPassword());
+			if (sysUserMapper.updateByPrimaryKey(sysUser) == 1)
+				return true;
+			else
+				return false;
+		}
 	}
 
 }

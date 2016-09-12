@@ -46,7 +46,22 @@ public class SysUserController {
 			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
 			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
 			SysUser sysUser){
-		System.out.println(sysUser);
+//		System.out.println(sysUser);
 		return sysUserService.getUserPBBySearch(currentPage, pageSize, sysUser);
+	}
+	
+	/**
+	 * 新增或修改用户，id为null则新增，否则为修改
+	 * @author L
+	 * @date 2016年9月12日
+	 * @param sysUser
+	 * @return
+	 */
+	@RequestMapping("saverOrUpdate")
+	@ResponseBody
+	public Object saverOrUpdate(SysUser sysUser){
+		System.out.println(sysUser);
+//		return null;
+		return sysUserService.saverOrUpdate(sysUser);
 	}
 }

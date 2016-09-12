@@ -15,6 +15,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 * @param password
 	 */
 	SysUser findUser(@Param("loginName") String loginName, @Param("password") String password);
-
+	
 
 }

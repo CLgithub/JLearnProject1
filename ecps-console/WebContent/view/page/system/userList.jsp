@@ -5,12 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>用户列表页</title>
 </head>
 <body>
 	<%-- ${pageBean}
 	${user} --%>
+	
 	<form id="form1">
+		<input type="button" value="新增/修改" id="addOrUpdateB" >
 		姓名：<input type="text" name="name" id="name" value="" >
 		登录名：<input type="text" name="loginname" id="loginname" value="" >
 		<input type="button" value="查询" id="searchB">
@@ -36,8 +38,6 @@
 				<span>
 				每页显示
 				<select id="pageSize" name="pageSize" >
-					<option <c:if test="${pageBean.pageSize==1}">selected="selected"</c:if>>1</option>
-					<option <c:if test="${pageBean.pageSize==2}">selected="selected"</c:if>>2</option>
 					<option <c:if test="${pageBean.pageSize==5}">selected="selected"</c:if>>5</option>
 					<option <c:if test="${pageBean.pageSize==10}">selected="selected"</c:if>>10</option>
 					<option <c:if test="${pageBean.pageSize==15}">selected="selected"</c:if>>15</option>
@@ -61,6 +61,7 @@
 	</form>
 </body>
 <script type="text/javascript">
+	var rowData="";
 	$(function() {
 		//全选
 		$("#allCB").click(function(){
@@ -72,6 +73,22 @@
 		});
 		loadMain();
 		fy();
+		//到达新增或修改页面
+		$("#addOrUpdateB").click(function (){
+			var items=$('input:checked[name=cb]');
+			if(items.length>1){
+				alert("请选择一条记录");
+				return;
+			}
+			var i=$(items[0]).val();
+		//	alert(i);
+			var id=rowData.rows[i].id;
+			var name=rowData.rows[i].name;
+			var loginname=rowData.rows[i].loginname;
+			var number=rowData.rows[i].number;
+			var status=rowData.rows[i].status;
+			location.href="userAddOrUpdate.jsp?id="+id+"&name="+name+"&loginname="+loginname+"&number="+number+"&status="+status;
+		});
 	});
 	function loadMain(){
 		var cPage=$("#currentPage").val();
@@ -92,9 +109,10 @@
 			success:function(data){
 				var jsonObj = $.parseJSON(data);
 				var rows="";
+				rowData=jsonObj;
 				for(var i=0;i<jsonObj.rows.length;i++){
 					rows+="<tr>"
-						+"<td><input type='checkbox' name='cb' /></td>"
+						+"<td><input type='checkbox' name='cb' value='"+parseInt(i)+"' /></td>"
 						+"<td>"+parseInt(i+1)+"</td>"
 						+"<td>"+jsonObj.rows[i].name+"</td>"
 						+"<td>"+jsonObj.rows[i].loginname+"</td>"
