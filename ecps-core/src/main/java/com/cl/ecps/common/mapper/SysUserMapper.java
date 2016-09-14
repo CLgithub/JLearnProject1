@@ -15,6 +15,21 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 	 * @param password
 	 */
 	SysUser findUser(@Param("loginName") String loginName, @Param("password") String password);
+
+	/**
+	 * 检测loginName是否可用，
+	 * @param loginname
+	 * @param id
+	 * @return sysUser不可用,null可用
+	 */
+	SysUser checkLoginName(SysUser sysUser);
+
+	/**
+	 * 根据ids删除对应记录
+	 * @param ids
+	 * @return 成功true，失败false
+	 */
+	boolean deleteByids(@Param("ids")String ids);
 	
 
 }

@@ -13,6 +13,7 @@
 	
 	<form id="form1">
 		<input type="button" value="新增/修改" id="addOrUpdateB" >
+		<input type="button" value="删除选中" id="deleteB" >
 		姓名：<input type="text" name="name" id="name" value="" >
 		登录名：<input type="text" name="loginname" id="loginname" value="" >
 		<input type="button" value="查询" id="searchB">
@@ -79,15 +80,48 @@
 			if(items.length>1){
 				alert("请选择一条记录");
 				return;
+			}else if(items.length==1){
+				var i=$(items[0]).val();
+			//	alert(i);
+				var id=rowData.rows[i].id;
+				var name=rowData.rows[i].name;
+				var loginname=rowData.rows[i].loginname;
+				var number=rowData.rows[i].number;
+				var status=rowData.rows[i].status;
+				location.href="userAddOrUpdate.jsp?id="+id+"&name="+name+"&loginname="+loginname+"&number="+number+"&status="+status;
+			}else{
+				location.href="userAddOrUpdate.jsp";
 			}
-			var i=$(items[0]).val();
-		//	alert(i);
-			var id=rowData.rows[i].id;
-			var name=rowData.rows[i].name;
-			var loginname=rowData.rows[i].loginname;
-			var number=rowData.rows[i].number;
-			var status=rowData.rows[i].status;
-			location.href="userAddOrUpdate.jsp?id="+id+"&name="+name+"&loginname="+loginname+"&number="+number+"&status="+status;
+			
+		});
+		//删除选中
+		$("#deleteB").click(function(){
+			var items=$('input:checked[name=cb]');
+			if(items.length==0){
+				alert("请选择要删除的记录");
+				return;
+			}else{
+				var ids="";				
+				for(var i=0;i<items.length;i++){
+					var j=$(items[i]).val();
+					var id=rowData.rows[j].id;
+					ids+=id+","
+				}
+				$.ajax({
+					url:"<%=path%>/sysUserController/deleteByids.action?ids="+ids,
+				//	data:ids,
+					dataType:"text",
+					type:"post",
+					success:function(data){
+						if(data=='true'){
+							alert("删除成功");
+							loadMain();
+						}else{
+							alert("删除失败");
+						}
+					}
+				});
+			}
 		});
 	});
 	function loadMain(){

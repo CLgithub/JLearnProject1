@@ -60,8 +60,19 @@ public class SysUserController {
 	@RequestMapping("saverOrUpdate")
 	@ResponseBody
 	public Object saverOrUpdate(SysUser sysUser){
-		System.out.println(sysUser);
+//		System.out.println(sysUser);
 //		return null;
 		return sysUserService.saverOrUpdate(sysUser);
+	}
+	
+	/**
+	 * 根据id删除对应记录
+	 * @param ids id用","隔开
+	 * @return
+	 */
+	@RequestMapping("deleteByids")
+	@ResponseBody
+	public Object deleteByids(@RequestParam(value="ids",defaultValue=",")String ids){
+		return sysUserService.deleteByids(ids);
 	}
 }

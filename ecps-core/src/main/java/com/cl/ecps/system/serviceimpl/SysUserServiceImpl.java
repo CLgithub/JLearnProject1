@@ -36,19 +36,30 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 	@Override
 	public boolean saverOrUpdate(SysUser sysUser) {
-		if(null==sysUser.getId()){
-			sysUser.setPassword(DataUtil.md5(Constant.INITPASSWORD));
-			if(sysUserMapper.insert(sysUser)==1)
-				return true;
-			else
-				return false;
-		}else {
-			sysUser.setPassword(this.selectByPrimaryKey(sysUser.getId()).getPassword());
-			if (sysUserMapper.updateByPrimaryKey(sysUser) == 1)
-				return true;
-			else
-				return false;
+		SysUser user=sysUserMapper.checkLoginName(sysUser);
+		if(null==user){
+			if(null==sysUser.getId()){
+				sysUser.setPassword(DataUtil.md5(Constant.INITPASSWORD));
+				if(sysUserMapper.insert(sysUser)==1)
+					return true;
+				else
+					return false;
+			}else {
+				sysUser.setPassword(this.selectByPrimaryKey(sysUser.getId()).getPassword());
+				if (sysUserMapper.updateByPrimaryKey(sysUser) == 1)
+					return true;
+				else
+					return false;
+			}
+		}else{
+			return false;
 		}
+	}
+
+	@Override
+	public boolean deleteByids(String ids) {
+		ids=ids.substring(0, ids.length()-1);
+		return sysUserMapper.deleteByids(ids);
 	}
 
 }

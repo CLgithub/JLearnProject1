@@ -41,7 +41,7 @@
 </body>
 <script type="text/javascript">
 	$(function(){
-		var id=${param.id};
+		var id="${param.id}";
 		var name="${param.name}";
 		var loginname="${param.loginname}";
 		var number="${param.number}";
@@ -52,16 +52,21 @@
 		$("#number").attr("value",number);
 		$("#status").attr("value",status);
 		
-		var data1=$("#form1").serialize();
-		
 		$("#sub").click(function(){
+			var data1=$("#form1").serialize();
 			$.ajax({
 				url:"<%=path%>/sysUserController/saverOrUpdate.action",
 				data:data1,
 				dataType:"text",
 				type:"post",
 				success:function(data){
-					
+	//				alert(data);
+					if(data=='true'){
+						alert("操作成功");
+						location.href="userList.jsp";
+					}else{
+						alert("输入有误，或用登录名已经被使用");
+					}
 				}
 			});	
 		})

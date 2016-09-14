@@ -34,4 +34,11 @@ public interface SysUserService extends BaseService<SysUser> {
 	 */
 	boolean saverOrUpdate(SysUser sysUser);
 
+	/**
+	 * 删除对应id记录
+	 * @param ids
+	 * @return 成功true，失败false
+	 */
+	boolean deleteByids(String ids);
+
 }

@@ -1,9 +1,5 @@
 package com.cl.ecps.common.servicebase;
 
-import java.util.List;
-import java.util.Map;
-
-import com.cl.ecps.common.entity.EbBrand;
 import com.cl.ecps.common.uitl.PageBean;
 
 public interface BaseService<T> {

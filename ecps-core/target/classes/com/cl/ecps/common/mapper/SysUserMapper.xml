@@ -164,4 +164,25 @@
 		where loginName=#{loginName} and password=#{password}
 	</select>	
 	
+	<!-- 检测loginName是否可用 -->
+	<select id="checkLoginName" parameterType="com.cl.ecps.common.entity.SysUser" resultMap="BaseResultMap" >
+		select 
+		<include refid="Base_Column_List" />
+		from sys_user
+		where 
+		loginName =
+		#{loginname,jdbcType=VARCHAR}
+		<if test="id != null">
+			and id != #{id,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<!-- 根据ids删除对应记录 -->
+	<delete id="deleteByids">
+		delete from
+		sys_user
+		where id in (${ids})
+	</delete>
+	
+	
 </mapper>
