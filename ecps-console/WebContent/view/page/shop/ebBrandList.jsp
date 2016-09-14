@@ -8,44 +8,33 @@
 <title>商品类别列表页</title>
 </head>
 <body>
-	<a href="<%=path%>/ebBrandController/toAddbrand.action">添加</a>
+	<%-- ${pageBean}
+	${user} --%>
+	
 	<form id="form1">
-	<%--姓名：<input type="text" name="name" value="${user.name}" >
-		登录名：<input type="text" name="loginname" value="${user.loginname}" >
-		<input type="button" value="查询" id="searchB"> --%>
+		<input type="button" value="新增/修改" id="addOrUpdateB" >
+		<input type="button" value="删除选中" id="deleteB" >
+		姓名：<input type="text" name="name" id="name" value="" >
+		登录名：<input type="text" name="loginname" id="loginname" value="" >
+		<input type="button" value="查询" id="searchB">
 		<table class="table table-hover table-striped " id="mainTable" width="100%">
 			<thead>
 				<tr>
 					<th width="50"><input type="checkbox" id="allCB" /></th>
 					<th width="50">序号</th>
-					<th>品牌编号</th>
-					<th>品牌图片</th>
-					<th>品牌名称</th>
-					<th>品牌地址</th>
-					<th>品牌描述</th>
-					<th width="10%">排序</th>
-					<th width="10%">操作</th>
+					<th>姓名</th>
+					<th>登录名</th>
+					<th>号码</th>
+					<th>所属部门</th>
+					<th>状态</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${pageBean.rows}" var="v" varStatus="vs">
-					<tr>
-						<td><input type="checkbox" name="cb" /></td>
-						<td>${vs.count}</td>
-						<td>${v.brandId}</td>
-						<td>${v.imgs}</td>
-						<td>${v.brandName}</td>
-						<td>${v.website}</td>
-						<td>${v.brandDesc}</td>
-						<td>${v.brandsort}</td>
-						<td><a href="#">修改</a>/<a href="#">删除</a></td>
-					</tr>
-				</c:forEach>
 			</tbody>
 		</table>
 		<!--------------------------分页条开始-------------------->
-		<ul class="pagination pagination-sm" >
-			<li><span>共${pageBean.total}条</span></li>
+		<ul class="pagination pagination-sm" id="fyt" >
+			<li><span id="total"></span></li>
 			<li>
 				<span>
 				每页显示
@@ -57,13 +46,11 @@
 				条
 				</span>
 			</li>
-			<li><span>共${pageBean.totalPage}页</span></li>
+			<li><span id="totalPage"></span></li>
 			<li><span>
 			当前第
 				<select id="currentPage" name="currentPage" >
-					<c:forEach begin="1" end="${pageBean.totalPage}" varStatus="vs"   >
-						<option value="${vs.count}" <c:if test="${vs.count==pageBean.currentPage}">selected</c:if> >${vs.count}
-					</c:forEach>
+					
 				</select>
 			页</span></li>
 			<li><a href="#" id="first">首页</a></li>
@@ -75,6 +62,7 @@
 	</form>
 </body>
 <script type="text/javascript">
+	var rowData="";
 	$(function() {
 		//全选
 		$("#allCB").click(function(){
@@ -84,12 +72,115 @@
 				item.checked=c;
 			});
 		});
-		
+		loadMain();
+		fy();
+		//到达新增或修改页面
+		$("#addOrUpdateB").click(function (){
+			var items=$('input:checked[name=cb]');
+			if(items.length>1){
+				alert("请选择一条记录");
+				return;
+			}else if(items.length==1){
+				var i=$(items[0]).val();
+			//	alert(i);
+				var id=rowData.rows[i].id;
+				var name=rowData.rows[i].name;
+				var loginname=rowData.rows[i].loginname;
+				var number=rowData.rows[i].number;
+				var status=rowData.rows[i].status;
+				location.href="userAddOrUpdate.jsp?id="+id+"&name="+name+"&loginname="+loginname+"&number="+number+"&status="+status;
+			}else{
+				location.href="userAddOrUpdate.jsp";
+			}
+			
+		});
+		//删除选中
+		$("#deleteB").click(function(){
+			var items=$('input:checked[name=cb]');
+			if(items.length==0){
+				alert("请选择要删除的记录");
+				return;
+			}else{
+				var ids="";				
+				for(var i=0;i<items.length;i++){
+					var j=$(items[i]).val();
+					var id=rowData.rows[j].id;
+					ids+=id+","
+				}
+				$.ajax({
+					url:"<%=path%>/sysUserController/deleteByids.action?ids="+ids,
+				//	data:ids,
+					dataType:"text",
+					type:"post",
+					success:function(data){
+						if(data=='true'){
+							alert("删除成功");
+							loadMain();
+						}else{
+							alert("删除失败");
+						}
+					}
+				});
+			}
+		});
+	});
+	function loadMain(){
+		var cPage=$("#currentPage").val();
+		var pSize=$("#pageSize").val();
+		var name=$("#name").val();
+		var loginname=$("#loginname").val();
+		var data1={
+			currentPage:cPage,
+			pageSize:pSize,
+			loginname:loginname,
+			name:name
+		};
+		$.ajax({
+			url:"<%=path%>/sysUserController/getPBBySearch.action",
+			data:data1,
+			dataType:"text",
+			type:"post",
+			success:function(data){
+				var jsonObj = $.parseJSON(data);
+				var rows="";
+				rowData=jsonObj;
+				for(var i=0;i<jsonObj.rows.length;i++){
+					rows+="<tr>"
+						+"<td><input type='checkbox' name='cb' value='"+parseInt(i)+"' /></td>"
+						+"<td>"+parseInt(i+1)+"</td>"
+						+"<td>"+jsonObj.rows[i].name+"</td>"
+						+"<td>"+jsonObj.rows[i].loginname+"</td>"
+						+"<td>"+jsonObj.rows[i].number+"</td>"
+						+"<td>"+jsonObj.rows[i].depname+"</td>"
+						+"<td>"+jsonObj.rows[i].status+"</td>"
+						+"</tr>";
+				}
+				$("#mainTable tbody").get(0).innerHTML=rows;
+				
+				//加载分页条
+				$("#total").text("共"+jsonObj.total+"条");
+				$("#totalPage").text("共"+jsonObj.totalPage+"页");
+				$("#totalPage").attr("value",jsonObj.totalPage);
+				var pages="";
+				for(var i=1;i<=jsonObj.totalPage;i++){
+					if(i==jsonObj.currentPage){
+						pages+='<option value="'+i+'" selected >'+i+'</option>'
+					}else{
+						pages+='<option value="'+i+'" >'+i+'</option>'
+					}
+				}
+				$("#currentPage").get(0).innerHTML=pages;
+			}
+		});
+	}
+	function fy(){
+		//翻页功能
 		$("#first,#last,#previous,#next,#searchB").click(function(){
 			if($(this).attr("id")=="first"){
 				$("#currentPage").val("1");
 			}else if($(this).attr("id")=="last"){
-				$("#currentPage").val("${pageBean.totalPage}");
+				var tPage=$("#totalPage").attr("value");
+				$("#currentPage").val(tPage);
 			}else if($(this).attr("id")=="previous"){
 				var cPage=$("#currentPage").val();
 				$("#currentPage").val(parseInt(cPage)-1);	//当不再currentPage可选范围时就会为null
@@ -97,21 +188,12 @@
 				var cPage=$("#currentPage").val();
 				$("#currentPage").val(parseInt(cPage)+1);
 			}
-			fun1();
+			loadMain();
 		});
 		$("#pageSize,#currentPage").change(function(){
-			fun1();
+			loadMain();
 		});
-		function fun1(){
-			var url="<%=path%>/ebBrandController/toEbBrandList.action";
-			var form1=$("#form1");
-			form1.attr("method","post");
-			form1.attr("action",url);
-			form1.submit();
-		}
-		
-		
-		
-	});
+	}
+	
 </script>
 </html>

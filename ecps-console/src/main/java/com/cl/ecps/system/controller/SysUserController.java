@@ -18,24 +18,6 @@ public class SysUserController {
 	@Resource
 	private SysUserService sysUserService;
 	
-	/**
-	 * 查看用户
-	 * @author L
-	 * @date 2016年9月2日
-	 */
-	@RequestMapping("toUserList")
-//	@ResponseBody
-	public String toUserList(
-			Model model,
-			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
-			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
-			SysUser user
-		){
-		PageBean pageBean = sysUserService.getUserPBBySearch(currentPage, pageSize, user);
-		model.addAttribute("pageBean", pageBean);
-		model.addAttribute("user",user);
-		return "/system/userList";
-	}
 	
 	/**
 	 * 查询用户

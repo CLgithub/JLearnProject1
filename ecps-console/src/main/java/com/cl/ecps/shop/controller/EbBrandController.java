@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cl.ecps.common.entity.EbBrand;
+import com.cl.ecps.common.entity.SysUser;
 import com.cl.ecps.common.uitl.PageBean;
 import com.cl.ecps.shop.service.EbBrandService;
 
@@ -49,6 +50,22 @@ public class EbBrandController {
 		System.out.println(ebBrand);
 		ebBrandService.insertSelective(ebBrand);
 		response.sendRedirect(request.getServletContext().getContextPath()+"/ebBrandController/toEbBrandList.action");
+	}
+	
+	/**
+	 * 查询
+	 * @param currentPage
+	 * @param pageSize
+	 * @param sysUser
+	 * @return
+	 */
+	@RequestMapping("getPBBySearch")
+	@ResponseBody
+	public Object getPBBySearch(
+			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
+			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
+			EbBrand ebBrand){
+		return ebBrandService.getUserPBBySearch(currentPage, pageSize, ebBrand);
 	}
 	
 	

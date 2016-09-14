@@ -26,6 +26,11 @@ public class EbBrandServiceImpl extends BaseServiceImpl<EbBrand> implements EbBr
 		return this.getPageBean(currentPage, pageSize, ebBrand);
 	}
 
+	@Override
+	public PageBean getUserPBBySearch(Integer currentPage, Integer pageSize, EbBrand ebBrand) {
+		return this.getPageBean(currentPage, pageSize, ebBrand);
+	}
+
 	
 
 	

@@ -16,4 +16,13 @@ public interface EbBrandService extends BaseService<EbBrand> {
 	 * @return
 	 */
 	PageBean getEbBrandPBbySearch(int currentPage, int pageSize, EbBrand ebBrand);
+
+	/**
+	 * 根据条件分页查看
+	 * @param currentPage
+	 * @param pageSize
+	 * @param ebBrand
+	 * @return
+	 */
+	PageBean getUserPBBySearch(Integer currentPage, Integer pageSize, EbBrand ebBrand);
 }
