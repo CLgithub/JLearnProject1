@@ -8,25 +8,21 @@
 <title>商品类别列表页</title>
 </head>
 <body>
-	<%-- ${pageBean}
-	${user} --%>
-	
 	<form id="form1">
 		<input type="button" value="新增/修改" id="addOrUpdateB" >
 		<input type="button" value="删除选中" id="deleteB" >
-		姓名：<input type="text" name="name" id="name" value="" >
-		登录名：<input type="text" name="loginname" id="loginname" value="" >
+		品牌名称：<input type="text" name="brandName" id="brandName" value="" >
 		<input type="button" value="查询" id="searchB">
 		<table class="table table-hover table-striped " id="mainTable" width="100%">
 			<thead>
 				<tr>
 					<th width="50"><input type="checkbox" id="allCB" /></th>
 					<th width="50">序号</th>
-					<th>姓名</th>
-					<th>登录名</th>
-					<th>号码</th>
-					<th>所属部门</th>
-					<th>状态</th>
+					<th>品牌名称</th>
+					<th>logo</th>
+					<th>品牌描述</th>
+					<th>地址</th>
+					<th>排序</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -83,14 +79,15 @@
 			}else if(items.length==1){
 				var i=$(items[0]).val();
 			//	alert(i);
-				var id=rowData.rows[i].id;
-				var name=rowData.rows[i].name;
-				var loginname=rowData.rows[i].loginname;
-				var number=rowData.rows[i].number;
-				var status=rowData.rows[i].status;
-				location.href="userAddOrUpdate.jsp?id="+id+"&name="+name+"&loginname="+loginname+"&number="+number+"&status="+status;
+				var brandId=rowData.rows[i].brandId;
+				var brandName=rowData.rows[i].brandName;
+				var imgs=rowData.rows[i].imgs;
+				var brandDesc=rowData.rows[i].brandDesc;
+				var website=rowData.rows[i].website;
+				var brandSort=rowData.rows[i].brandSort;
+				location.href="ebBrandAddOrUpdate.jsp?brandId="+brandId+"&brandName="+brandName+"&imgs="+imgs+"&brandDesc="+brandDesc+"&website="+website+"&brandSort="+brandSort;
 			}else{
-				location.href="userAddOrUpdate.jsp";
+				location.href="ebBrandAddOrUpdate.jsp";
 			}
 			
 		});
@@ -108,8 +105,7 @@
 					ids+=id+","
 				}
 				$.ajax({
-					url:"<%=path%>/sysUserController/deleteByids.action?ids="+ids,
-				//	data:ids,
+					url:"<%=path%>/ebBrandController/deleteByids.action?ids="+ids,
 					dataType:"text",
 					type:"post",
 					success:function(data){
@@ -127,16 +123,14 @@
 	function loadMain(){
 		var cPage=$("#currentPage").val();
 		var pSize=$("#pageSize").val();
-		var name=$("#name").val();
-		var loginname=$("#loginname").val();
+		var brandName=$("#brandName").val();
 		var data1={
 			currentPage:cPage,
 			pageSize:pSize,
-			loginname:loginname,
-			name:name
+			brandName:brandName
 		};
 		$.ajax({
-			url:"<%=path%>/sysUserController/getPBBySearch.action",
+			url:"<%=path%>/ebBrandController/getPBBySearch.action",
 			data:data1,
 			dataType:"text",
 			type:"post",
@@ -144,19 +138,18 @@
 				var jsonObj = $.parseJSON(data);
 				var rows="";
 				rowData=jsonObj;
-				for(var i=0;i<jsonObj.rows.length;i++){
+				for(var i=0;i<rowData.rows.length;i++){
 					rows+="<tr>"
 						+"<td><input type='checkbox' name='cb' value='"+parseInt(i)+"' /></td>"
 						+"<td>"+parseInt(i+1)+"</td>"
-						+"<td>"+jsonObj.rows[i].name+"</td>"
-						+"<td>"+jsonObj.rows[i].loginname+"</td>"
-						+"<td>"+jsonObj.rows[i].number+"</td>"
-						+"<td>"+jsonObj.rows[i].depname+"</td>"
-						+"<td>"+jsonObj.rows[i].status+"</td>"
+						+"<td>"+rowData.rows[i].brandName+"</td>"
+						+"<td>"+rowData.rows[i].imgs+"</td>"
+						+"<td>"+rowData.rows[i].brandDesc+"</td>"
+						+"<td>"+rowData.rows[i].website+"</td>"
+						+"<td>"+rowData.rows[i].brandSort+"</td>"
 						+"</tr>";
 				}
 				$("#mainTable tbody").get(0).innerHTML=rows;
-				
 				//加载分页条
 				$("#total").text("共"+jsonObj.total+"条");
 				$("#totalPage").text("共"+jsonObj.totalPage+"页");

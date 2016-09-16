@@ -24,34 +24,6 @@ public class EbBrandController {
 	@Resource
 	private EbBrandService ebBrandService;
 	
-	//到达列表页
-	@RequestMapping("toEbBrandList")
-	public String toEbBrandList(
-			Model model,
-			@RequestParam(value="currentPage",defaultValue="1")Integer currentPage, 
-			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
-			EbBrand ebBrand
-		){
-		PageBean pageBean = ebBrandService.getEbBrandPBbySearch(currentPage, pageSize, ebBrand);
-		model.addAttribute("pageBean", pageBean);
-		model.addAttribute("ebBrand", ebBrand);
-		return "/shop/ebBrandList";
-	}
-	
-	
-	//到达添加页
-	@RequestMapping("toAddbrand")
-	public String toAddbrand(){
-		return "/shop/addBrand";
-	}
-	
-	@RequestMapping("addBrand")
-	public void addBrand(EbBrand ebBrand,HttpServletRequest request,HttpServletResponse response) throws IOException{
-		System.out.println(ebBrand);
-		ebBrandService.insertSelective(ebBrand);
-		response.sendRedirect(request.getServletContext().getContextPath()+"/ebBrandController/toEbBrandList.action");
-	}
-	
 	/**
 	 * 查询
 	 * @param currentPage
@@ -66,6 +38,27 @@ public class EbBrandController {
 			@RequestParam(value="pageSize",defaultValue="10")Integer pageSize,
 			EbBrand ebBrand){
 		return ebBrandService.getUserPBBySearch(currentPage, pageSize, ebBrand);
+	}
+	
+	/**
+	 * 新增或修改
+	 */
+	@RequestMapping("saverOrUpdate")
+	@ResponseBody
+	public Object saverOrUpdate(EbBrand ebBrand) {
+//		System.out.println(ebBrand);
+		return ebBrandService.saverOrUpdate(ebBrand);
+	}
+	
+	/**
+	 * 根据id删除对应记录
+	 * @param ids id用","隔开
+	 * @return
+	 */
+	@RequestMapping("deleteByids")
+	@ResponseBody
+	public Object deleteByids(@RequestParam(value="ids",defaultValue=",")String ids){
+		return ebBrandService.deleteByids(ids);
 	}
 	
 	

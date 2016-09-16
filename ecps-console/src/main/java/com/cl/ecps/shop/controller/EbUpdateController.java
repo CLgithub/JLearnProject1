@@ -22,6 +22,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import net.sf.json.JSONObject;
 
+
 @Controller
 @RequestMapping("ebUpdateController")
 public class EbUpdateController {
@@ -43,7 +44,11 @@ public class EbUpdateController {
 		String key = iterator.next();
 		MultipartFile mFile = fileMap.get(key);
 		// 设置文件存储路径
-		String fileName = mFile.getOriginalFilename();
+		String brandid = request.getParameter("brandid");
+		String fileName0 = mFile.getOriginalFilename();
+		fileName0=fileName0.substring(fileName0.lastIndexOf("."), fileName0.length());
+		String fileName=brandid+"_logo"+fileName0;
+		
 		String filePath = (String) DataUtil.readProp("file_path");
 		String relativePath = "/upLoadFile/" + fileName;	//相对路径
 		String realPath = filePath + "/upLoadFile/" + fileName;	//绝对路径
@@ -60,4 +65,5 @@ public class EbUpdateController {
 		jo.accumulate("relativePath", relativePath);
 		return jo;
 	}
+	
 }

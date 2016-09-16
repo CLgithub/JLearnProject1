@@ -5,4 +5,5 @@ import com.cl.ecps.common.mapperbase.BaseMapper;
 
 public interface EbBrandMapper extends BaseMapper<EbBrand> {
 
+
 }

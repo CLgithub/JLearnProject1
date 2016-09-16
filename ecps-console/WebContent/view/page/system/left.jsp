@@ -14,6 +14,7 @@
 	<%-- <a href="<%=basePath%>view/page/datagridTest/userJQassets.jsp" target="rightFrame">用户管理2</a><br>
 	<a href="<%=basePath%>view/page/system/rights.jsp" target="rightFrame">权限管理</a><br>
 	<a href="<%=basePath%>view/page/system/logs.jsp" target="rightFrame">日至管理</a><br> --%>
+	<a href="<%=basePath%>view/page/shop/ebBrandList.jsp" target="rightFrame">商品类别管理<br>
 </div>
 <div id="menu1"></div>
 </body>
