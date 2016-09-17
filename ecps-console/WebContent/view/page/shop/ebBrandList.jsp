@@ -143,7 +143,7 @@
 						+"<td><input type='checkbox' name='cb' value='"+parseInt(i)+"' /></td>"
 						+"<td>"+parseInt(i+1)+"</td>"
 						+"<td>"+rowData.rows[i].brandName+"</td>"
-						+"<td>"+rowData.rows[i].imgs+"</td>"
+						+"<td><img src=<%=filePath%>"+rowData.rows[i].imgs+" width=100 height=100 ></td>"
 						+"<td>"+rowData.rows[i].brandDesc+"</td>"
 						+"<td>"+rowData.rows[i].website+"</td>"
 						+"<td>"+rowData.rows[i].brandSort+"</td>"

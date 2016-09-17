@@ -78,6 +78,9 @@
 		$("#website").val(website);
 		$("#brandsort").val(brandSort);
 		
+	//	$("#imgsImgSrc").attr("src","http://localhost:8090/ecps-file${param.imgs}");
+		$("#imgsImgSrc").attr("src","<%=filePath%>/"+imgs);
+		
 		$("#sub").click(function(){
 			var data1=$("#form1").serialize();
 			$.ajax({
