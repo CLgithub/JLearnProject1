@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2016-09-13 08:28:38
+Date: 2016-09-18 17:25:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,19 +20,88 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `ebbrand`;
 CREATE TABLE `ebbrand` (
+  `brandId` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `brandName` varchar(255) DEFAULT NULL,
   `brandDesc` varchar(255) DEFAULT NULL,
   `imgs` varchar(255) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
   `brandSort` int(50) DEFAULT NULL,
-  `brandId` int(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`brandId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ebbrand
 -- ----------------------------
-INSERT INTO `ebbrand` VALUES ('魅族', 'fsdfsd', '/upLoadFile/ip.PNG', 'http://www.meizu.com', '1', '0003');
+
+-- ----------------------------
+-- Table structure for ebfeature
+-- ----------------------------
+DROP TABLE IF EXISTS `ebfeature`;
+CREATE TABLE `ebfeature` (
+  `featureId` bigint(11) NOT NULL,
+  `catId` bigint(11) DEFAULT NULL,
+  `featureName` varchar(80) NOT NULL,
+  `isSpec` smallint(1) DEFAULT NULL,
+  `isSelect` smallint(1) DEFAULT NULL,
+  `isShow` smallint(1) DEFAULT NULL,
+  `selectValues` varchar(800) DEFAULT NULL,
+  `inputType` bigint(2) DEFAULT NULL,
+  `featureSort` int(5) DEFAULT NULL,
+  PRIMARY KEY (`featureId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ebfeature
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ebitem
+-- ----------------------------
+DROP TABLE IF EXISTS `ebitem`;
+CREATE TABLE `ebitem` (
+  `itemId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `itemName` varchar(255) DEFAULT NULL,
+  `itemNo` varchar(255) DEFAULT NULL,
+  `brandId` bigint(20) unsigned zerofill DEFAULT NULL,
+  `catId` bigint(20) DEFAULT NULL,
+  `tagImgId` bigint(20) DEFAULT NULL,
+  `tagImg` smallint(6) DEFAULT NULL,
+  `isNew` smallint(6) DEFAULT NULL,
+  `isGood` smallint(6) DEFAULT NULL,
+  `isHot` smallint(6) DEFAULT NULL,
+  `promotion` varchar(255) DEFAULT NULL,
+  `auditStatus` smallint(6) DEFAULT NULL,
+  `showStatus` smallint(6) DEFAULT NULL,
+  `imgs` varchar(255) DEFAULT NULL,
+  `keywords` varchar(255) DEFAULT NULL,
+  `pageDesc` varchar(255) DEFAULT NULL,
+  `onSaleTime` date DEFAULT NULL,
+  `checkTime` date DEFAULT NULL,
+  `updateTime` date DEFAULT NULL,
+  `updateUserId` bigint(20) DEFAULT NULL,
+  `createTime` date DEFAULT NULL,
+  `checkerUserId` bigint(20) DEFAULT NULL,
+  `fullPathDeploy` varchar(255) DEFAULT NULL,
+  `fullPathDeployOffer` varchar(255) DEFAULT NULL,
+  `originalItemId` bigint(20) DEFAULT NULL,
+  `lastStatus` smallint(6) DEFAULT NULL,
+  `merchantId` bigint(20) DEFAULT NULL,
+  `itemSort` bigint(20) DEFAULT NULL,
+  `sales` bigint(20) DEFAULT NULL,
+  `createUserId` bigint(20) DEFAULT NULL,
+  `simLevel` smallint(6) DEFAULT NULL,
+  `giftDesc` varchar(255) DEFAULT NULL,
+  `giftImg` varchar(255) DEFAULT NULL,
+  `giftShowType` varchar(255) DEFAULT NULL,
+  `imgSize1` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`itemId`),
+  KEY `brandId` (`brandId`),
+  CONSTRAINT `ebitem_ibfk_1` FOREIGN KEY (`brandId`) REFERENCES `ebbrand` (`brandId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ebitem
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_department

@@ -11,7 +11,7 @@
 	<form id="form1">
 		<input type="button" value="新增/修改" id="addOrUpdateB" >
 		<input type="button" value="删除选中" id="deleteB" >
-		品牌名称：<input type="text" name="brandName" id="brandName" value="" >
+		品牌名称：<input type="text" name="brandname" id="brandname" value="" >
 		<input type="button" value="查询" id="searchB">
 		<table class="table table-hover table-striped " id="mainTable" width="100%">
 			<thead>
@@ -80,12 +80,12 @@
 				var i=$(items[0]).val();
 			//	alert(i);
 				var brandId=rowData.rows[i].brandId;
-				var brandName=rowData.rows[i].brandName;
+				var brandname=rowData.rows[i].brandname;
 				var imgs=rowData.rows[i].imgs;
 				var brandDesc=rowData.rows[i].brandDesc;
 				var website=rowData.rows[i].website;
 				var brandSort=rowData.rows[i].brandSort;
-				location.href="ebBrandAddOrUpdate.jsp?brandId="+brandId+"&brandName="+brandName+"&imgs="+imgs+"&brandDesc="+brandDesc+"&website="+website+"&brandSort="+brandSort;
+				location.href="ebBrandAddOrUpdate.jsp?brandId="+brandId+"&brandname="+brandname+"&imgs="+imgs+"&brandDesc="+brandDesc+"&website="+website+"&brandSort="+brandSort;
 			}else{
 				location.href="ebBrandAddOrUpdate.jsp";
 			}
@@ -123,11 +123,11 @@
 	function loadMain(){
 		var cPage=$("#currentPage").val();
 		var pSize=$("#pageSize").val();
-		var brandName=$("#brandName").val();
+		var brandname=$("#brandname").val();
 		var data1={
 			currentPage:cPage,
 			pageSize:pSize,
-			brandName:brandName
+			brandname:brandname
 		};
 		$.ajax({
 			url:"<%=path%>/ebBrandController/getPBBySearch.action",

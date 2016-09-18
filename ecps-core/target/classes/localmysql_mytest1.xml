@@ -46,7 +46,7 @@
 		</javaClientGenerator>
 
 		<!-- 要对那些数据表进行生成操作，必须要有一个. -->
-		<table schema="ecps" tableName="EbBrand" domainObjectName="EbBrand"
+		<table schema="ecps" tableName="EbItem" domainObjectName="EbItem"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"

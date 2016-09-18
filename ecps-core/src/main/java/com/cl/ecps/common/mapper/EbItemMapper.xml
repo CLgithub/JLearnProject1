@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cl.ecps.common.mapper.EbItemMapper" >
+  <resultMap id="BaseResultMap" type="com.cl.ecps.common.entity.EbItem" >
+    <id column="itemId" property="itemid" jdbcType="BIGINT" />
+    <result column="itemName" property="itemname" jdbcType="VARCHAR" />
+    <result column="itemNo" property="itemno" jdbcType="VARCHAR" />
+    <result column="brandId" property="brandid" jdbcType="BIGINT" />
+    <result column="catId" property="catid" jdbcType="BIGINT" />
+    <result column="tagImgId" property="tagimgid" jdbcType="BIGINT" />
+    <result column="tagImg" property="tagimg" jdbcType="SMALLINT" />
+    <result column="isNew" property="isnew" jdbcType="SMALLINT" />
+    <result column="isGood" property="isgood" jdbcType="SMALLINT" />
+    <result column="isHot" property="ishot" jdbcType="SMALLINT" />
+    <result column="promotion" property="promotion" jdbcType="VARCHAR" />
+    <result column="auditStatus" property="auditstatus" jdbcType="SMALLINT" />
+    <result column="showStatus" property="showstatus" jdbcType="SMALLINT" />
+    <result column="imgs" property="imgs" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="pageDesc" property="pagedesc" jdbcType="VARCHAR" />
+    <result column="onSaleTime" property="onsaletime" jdbcType="DATE" />
+    <result column="checkTime" property="checktime" jdbcType="DATE" />
+    <result column="updateTime" property="updatetime" jdbcType="DATE" />
+    <result column="updateUserId" property="updateuserid" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="DATE" />
+    <result column="checkerUserId" property="checkeruserid" jdbcType="BIGINT" />
+    <result column="fullPathDeploy" property="fullpathdeploy" jdbcType="VARCHAR" />
+    <result column="fullPathDeployOffer" property="fullpathdeployoffer" jdbcType="VARCHAR" />
+    <result column="originalItemId" property="originalitemid" jdbcType="BIGINT" />
+    <result column="lastStatus" property="laststatus" jdbcType="SMALLINT" />
+    <result column="merchantId" property="merchantid" jdbcType="BIGINT" />
+    <result column="itemSort" property="itemsort" jdbcType="BIGINT" />
+    <result column="sales" property="sales" jdbcType="BIGINT" />
+    <result column="createUserId" property="createuserid" jdbcType="BIGINT" />
+    <result column="simLevel" property="simlevel" jdbcType="SMALLINT" />
+    <result column="giftDesc" property="giftdesc" jdbcType="VARCHAR" />
+    <result column="giftImg" property="giftimg" jdbcType="VARCHAR" />
+    <result column="giftShowType" property="giftshowtype" jdbcType="VARCHAR" />
+    <result column="imgSize1" property="imgsize1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    itemId, itemName, itemNo, brandId, catId, tagImgId, tagImg, isNew, isGood, isHot, 
+    promotion, auditStatus, showStatus, imgs, keywords, pageDesc, onSaleTime, checkTime, 
+    updateTime, updateUserId, createTime, checkerUserId, fullPathDeploy, fullPathDeployOffer, 
+    originalItemId, lastStatus, merchantId, itemSort, sales, createUserId, simLevel, 
+    giftDesc, giftImg, giftShowType, imgSize1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ebitem
+    where itemId = #{itemid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ebitem
+    where itemId = #{itemid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cl.ecps.common.entity.EbItem" >
+    insert into ebitem (itemId, itemName, itemNo, 
+      brandId, catId, tagImgId, 
+      tagImg, isNew, isGood, 
+      isHot, promotion, auditStatus, 
+      showStatus, imgs, keywords, 
+      pageDesc, onSaleTime, checkTime, 
+      updateTime, updateUserId, createTime, 
+      checkerUserId, fullPathDeploy, fullPathDeployOffer, 
+      originalItemId, lastStatus, merchantId, 
+      itemSort, sales, createUserId, 
+      simLevel, giftDesc, giftImg, 
+      giftShowType, imgSize1)
+    values (#{itemid,jdbcType=BIGINT}, #{itemname,jdbcType=VARCHAR}, #{itemno,jdbcType=VARCHAR}, 
+      #{brandid,jdbcType=BIGINT}, #{catid,jdbcType=BIGINT}, #{tagimgid,jdbcType=BIGINT}, 
+      #{tagimg,jdbcType=SMALLINT}, #{isnew,jdbcType=SMALLINT}, #{isgood,jdbcType=SMALLINT}, 
+      #{ishot,jdbcType=SMALLINT}, #{promotion,jdbcType=VARCHAR}, #{auditstatus,jdbcType=SMALLINT}, 
+      #{showstatus,jdbcType=SMALLINT}, #{imgs,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+      #{pagedesc,jdbcType=VARCHAR}, #{onsaletime,jdbcType=DATE}, #{checktime,jdbcType=DATE}, 
+      #{updatetime,jdbcType=DATE}, #{updateuserid,jdbcType=BIGINT}, #{createtime,jdbcType=DATE}, 
+      #{checkeruserid,jdbcType=BIGINT}, #{fullpathdeploy,jdbcType=VARCHAR}, #{fullpathdeployoffer,jdbcType=VARCHAR}, 
+      #{originalitemid,jdbcType=BIGINT}, #{laststatus,jdbcType=SMALLINT}, #{merchantid,jdbcType=BIGINT}, 
+      #{itemsort,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, #{createuserid,jdbcType=BIGINT}, 
+      #{simlevel,jdbcType=SMALLINT}, #{giftdesc,jdbcType=VARCHAR}, #{giftimg,jdbcType=VARCHAR}, 
+      #{giftshowtype,jdbcType=VARCHAR}, #{imgsize1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cl.ecps.common.entity.EbItem" >
+    insert into ebitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        itemId,
+      </if>
+      <if test="itemname != null" >
+        itemName,
+      </if>
+      <if test="itemno != null" >
+        itemNo,
+      </if>
+      <if test="brandid != null" >
+        brandId,
+      </if>
+      <if test="catid != null" >
+        catId,
+      </if>
+      <if test="tagimgid != null" >
+        tagImgId,
+      </if>
+      <if test="tagimg != null" >
+        tagImg,
+      </if>
+      <if test="isnew != null" >
+        isNew,
+      </if>
+      <if test="isgood != null" >
+        isGood,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+      <if test="promotion != null" >
+        promotion,
+      </if>
+      <if test="auditstatus != null" >
+        auditStatus,
+      </if>
+      <if test="showstatus != null" >
+        showStatus,
+      </if>
+      <if test="imgs != null" >
+        imgs,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="pagedesc != null" >
+        pageDesc,
+      </if>
+      <if test="onsaletime != null" >
+        onSaleTime,
+      </if>
+      <if test="checktime != null" >
+        checkTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="updateuserid != null" >
+        updateUserId,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="checkeruserid != null" >
+        checkerUserId,
+      </if>
+      <if test="fullpathdeploy != null" >
+        fullPathDeploy,
+      </if>
+      <if test="fullpathdeployoffer != null" >
+        fullPathDeployOffer,
+      </if>
+      <if test="originalitemid != null" >
+        originalItemId,
+      </if>
+      <if test="laststatus != null" >
+        lastStatus,
+      </if>
+      <if test="merchantid != null" >
+        merchantId,
+      </if>
+      <if test="itemsort != null" >
+        itemSort,
+      </if>
+      <if test="sales != null" >
+        sales,
+      </if>
+      <if test="createuserid != null" >
+        createUserId,
+      </if>
+      <if test="simlevel != null" >
+        simLevel,
+      </if>
+      <if test="giftdesc != null" >
+        giftDesc,
+      </if>
+      <if test="giftimg != null" >
+        giftImg,
+      </if>
+      <if test="giftshowtype != null" >
+        giftShowType,
+      </if>
+      <if test="imgsize1 != null" >
+        imgSize1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        #{itemid,jdbcType=BIGINT},
+      </if>
+      <if test="itemname != null" >
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemno != null" >
+        #{itemno,jdbcType=VARCHAR},
+      </if>
+      <if test="brandid != null" >
+        #{brandid,jdbcType=BIGINT},
+      </if>
+      <if test="catid != null" >
+        #{catid,jdbcType=BIGINT},
+      </if>
+      <if test="tagimgid != null" >
+        #{tagimgid,jdbcType=BIGINT},
+      </if>
+      <if test="tagimg != null" >
+        #{tagimg,jdbcType=SMALLINT},
+      </if>
+      <if test="isnew != null" >
+        #{isnew,jdbcType=SMALLINT},
+      </if>
+      <if test="isgood != null" >
+        #{isgood,jdbcType=SMALLINT},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=SMALLINT},
+      </if>
+      <if test="promotion != null" >
+        #{promotion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditstatus != null" >
+        #{auditstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="showstatus != null" >
+        #{showstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="imgs != null" >
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="pagedesc != null" >
+        #{pagedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="onsaletime != null" >
+        #{onsaletime,jdbcType=DATE},
+      </if>
+      <if test="checktime != null" >
+        #{checktime,jdbcType=DATE},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="updateuserid != null" >
+        #{updateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="checkeruserid != null" >
+        #{checkeruserid,jdbcType=BIGINT},
+      </if>
+      <if test="fullpathdeploy != null" >
+        #{fullpathdeploy,jdbcType=VARCHAR},
+      </if>
+      <if test="fullpathdeployoffer != null" >
+        #{fullpathdeployoffer,jdbcType=VARCHAR},
+      </if>
+      <if test="originalitemid != null" >
+        #{originalitemid,jdbcType=BIGINT},
+      </if>
+      <if test="laststatus != null" >
+        #{laststatus,jdbcType=SMALLINT},
+      </if>
+      <if test="merchantid != null" >
+        #{merchantid,jdbcType=BIGINT},
+      </if>
+      <if test="itemsort != null" >
+        #{itemsort,jdbcType=BIGINT},
+      </if>
+      <if test="sales != null" >
+        #{sales,jdbcType=BIGINT},
+      </if>
+      <if test="createuserid != null" >
+        #{createuserid,jdbcType=BIGINT},
+      </if>
+      <if test="simlevel != null" >
+        #{simlevel,jdbcType=SMALLINT},
+      </if>
+      <if test="giftdesc != null" >
+        #{giftdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="giftimg != null" >
+        #{giftimg,jdbcType=VARCHAR},
+      </if>
+      <if test="giftshowtype != null" >
+        #{giftshowtype,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsize1 != null" >
+        #{imgsize1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cl.ecps.common.entity.EbItem" >
+    update ebitem
+    <set >
+      <if test="itemname != null" >
+        itemName = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemno != null" >
+        itemNo = #{itemno,jdbcType=VARCHAR},
+      </if>
+      <if test="brandid != null" >
+        brandId = #{brandid,jdbcType=BIGINT},
+      </if>
+      <if test="catid != null" >
+        catId = #{catid,jdbcType=BIGINT},
+      </if>
+      <if test="tagimgid != null" >
+        tagImgId = #{tagimgid,jdbcType=BIGINT},
+      </if>
+      <if test="tagimg != null" >
+        tagImg = #{tagimg,jdbcType=SMALLINT},
+      </if>
+      <if test="isnew != null" >
+        isNew = #{isnew,jdbcType=SMALLINT},
+      </if>
+      <if test="isgood != null" >
+        isGood = #{isgood,jdbcType=SMALLINT},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=SMALLINT},
+      </if>
+      <if test="promotion != null" >
+        promotion = #{promotion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditstatus != null" >
+        auditStatus = #{auditstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="showstatus != null" >
+        showStatus = #{showstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="imgs != null" >
+        imgs = #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="pagedesc != null" >
+        pageDesc = #{pagedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="onsaletime != null" >
+        onSaleTime = #{onsaletime,jdbcType=DATE},
+      </if>
+      <if test="checktime != null" >
+        checkTime = #{checktime,jdbcType=DATE},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="updateuserid != null" >
+        updateUserId = #{updateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="checkeruserid != null" >
+        checkerUserId = #{checkeruserid,jdbcType=BIGINT},
+      </if>
+      <if test="fullpathdeploy != null" >
+        fullPathDeploy = #{fullpathdeploy,jdbcType=VARCHAR},
+      </if>
+      <if test="fullpathdeployoffer != null" >
+        fullPathDeployOffer = #{fullpathdeployoffer,jdbcType=VARCHAR},
+      </if>
+      <if test="originalitemid != null" >
+        originalItemId = #{originalitemid,jdbcType=BIGINT},
+      </if>
+      <if test="laststatus != null" >
+        lastStatus = #{laststatus,jdbcType=SMALLINT},
+      </if>
+      <if test="merchantid != null" >
+        merchantId = #{merchantid,jdbcType=BIGINT},
+      </if>
+      <if test="itemsort != null" >
+        itemSort = #{itemsort,jdbcType=BIGINT},
+      </if>
+      <if test="sales != null" >
+        sales = #{sales,jdbcType=BIGINT},
+      </if>
+      <if test="createuserid != null" >
+        createUserId = #{createuserid,jdbcType=BIGINT},
+      </if>
+      <if test="simlevel != null" >
+        simLevel = #{simlevel,jdbcType=SMALLINT},
+      </if>
+      <if test="giftdesc != null" >
+        giftDesc = #{giftdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="giftimg != null" >
+        giftImg = #{giftimg,jdbcType=VARCHAR},
+      </if>
+      <if test="giftshowtype != null" >
+        giftShowType = #{giftshowtype,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsize1 != null" >
+        imgSize1 = #{imgsize1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where itemId = #{itemid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cl.ecps.common.entity.EbItem" >
+    update ebitem
+    set itemName = #{itemname,jdbcType=VARCHAR},
+      itemNo = #{itemno,jdbcType=VARCHAR},
+      brandId = #{brandid,jdbcType=BIGINT},
+      catId = #{catid,jdbcType=BIGINT},
+      tagImgId = #{tagimgid,jdbcType=BIGINT},
+      tagImg = #{tagimg,jdbcType=SMALLINT},
+      isNew = #{isnew,jdbcType=SMALLINT},
+      isGood = #{isgood,jdbcType=SMALLINT},
+      isHot = #{ishot,jdbcType=SMALLINT},
+      promotion = #{promotion,jdbcType=VARCHAR},
+      auditStatus = #{auditstatus,jdbcType=SMALLINT},
+      showStatus = #{showstatus,jdbcType=SMALLINT},
+      imgs = #{imgs,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      pageDesc = #{pagedesc,jdbcType=VARCHAR},
+      onSaleTime = #{onsaletime,jdbcType=DATE},
+      checkTime = #{checktime,jdbcType=DATE},
+      updateTime = #{updatetime,jdbcType=DATE},
+      updateUserId = #{updateuserid,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=DATE},
+      checkerUserId = #{checkeruserid,jdbcType=BIGINT},
+      fullPathDeploy = #{fullpathdeploy,jdbcType=VARCHAR},
+      fullPathDeployOffer = #{fullpathdeployoffer,jdbcType=VARCHAR},
+      originalItemId = #{originalitemid,jdbcType=BIGINT},
+      lastStatus = #{laststatus,jdbcType=SMALLINT},
+      merchantId = #{merchantid,jdbcType=BIGINT},
+      itemSort = #{itemsort,jdbcType=BIGINT},
+      sales = #{sales,jdbcType=BIGINT},
+      createUserId = #{createuserid,jdbcType=BIGINT},
+      simLevel = #{simlevel,jdbcType=SMALLINT},
+      giftDesc = #{giftdesc,jdbcType=VARCHAR},
+      giftImg = #{giftimg,jdbcType=VARCHAR},
+      giftShowType = #{giftshowtype,jdbcType=VARCHAR},
+      imgSize1 = #{imgsize1,jdbcType=VARCHAR}
+    where itemId = #{itemid,jdbcType=BIGINT}
+  </update>
+</mapper>
