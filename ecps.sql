@@ -1,24 +1,27 @@
-/*
-Navicat MySQL Data Transfer
+-- MySQL dump 10.13  Distrib 5.7.15, for Linux (x86_64)
+--
+-- Host: localhost    Database: ecps
+-- ------------------------------------------------------
+-- Server version	5.7.15-0ubuntu0.16.04.1
 
-Source Server         : locahhost
-Source Server Version : 50712
-Source Host           : localhost:3306
-Source Database       : ecps
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 50712
-File Encoding         : 65001
+--
+-- Table structure for table `ebbrand`
+--
 
-Date: 2016-09-18 17:25:08
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for ebbrand
--- ----------------------------
 DROP TABLE IF EXISTS `ebbrand`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ebbrand` (
   `brandId` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `brandName` varchar(255) DEFAULT NULL,
@@ -28,15 +31,55 @@ CREATE TABLE `ebbrand` (
   `brandSort` int(50) DEFAULT NULL,
   PRIMARY KEY (`brandId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of ebbrand
--- ----------------------------
+--
+-- Dumping data for table `ebbrand`
+--
 
--- ----------------------------
--- Table structure for ebfeature
--- ----------------------------
+LOCK TABLES `ebbrand` WRITE;
+/*!40000 ALTER TABLE `ebbrand` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ebbrand` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ebcat`
+--
+
+DROP TABLE IF EXISTS `ebcat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ebcat` (
+  `catid` int(11) NOT NULL AUTO_INCREMENT,
+  `catname` varchar(80) DEFAULT NULL,
+  `catdesc` varchar(80) DEFAULT NULL,
+  `parentid` int(11) DEFAULT NULL,
+  `catsort` int(5) DEFAULT NULL,
+  `keywords` varchar(80) DEFAULT NULL,
+  `path` varchar(200) DEFAULT NULL,
+  `mark` varchar(80) DEFAULT NULL,
+  `isdisplay` int(5) DEFAULT NULL,
+  `fullpath` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`catid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ebcat`
+--
+
+LOCK TABLES `ebcat` WRITE;
+/*!40000 ALTER TABLE `ebcat` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ebcat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ebfeature`
+--
+
 DROP TABLE IF EXISTS `ebfeature`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ebfeature` (
   `featureId` bigint(11) NOT NULL,
   `catId` bigint(11) DEFAULT NULL,
@@ -49,15 +92,24 @@ CREATE TABLE `ebfeature` (
   `featureSort` int(5) DEFAULT NULL,
   PRIMARY KEY (`featureId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of ebfeature
--- ----------------------------
+--
+-- Dumping data for table `ebfeature`
+--
 
--- ----------------------------
--- Table structure for ebitem
--- ----------------------------
+LOCK TABLES `ebfeature` WRITE;
+/*!40000 ALTER TABLE `ebfeature` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ebfeature` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ebitem`
+--
+
 DROP TABLE IF EXISTS `ebitem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ebitem` (
   `itemId` bigint(20) NOT NULL AUTO_INCREMENT,
   `itemName` varchar(255) DEFAULT NULL,
@@ -98,15 +150,24 @@ CREATE TABLE `ebitem` (
   KEY `brandId` (`brandId`),
   CONSTRAINT `ebitem_ibfk_1` FOREIGN KEY (`brandId`) REFERENCES `ebbrand` (`brandId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of ebitem
--- ----------------------------
+--
+-- Dumping data for table `ebitem`
+--
 
--- ----------------------------
--- Table structure for sys_department
--- ----------------------------
+LOCK TABLES `ebitem` WRITE;
+/*!40000 ALTER TABLE `ebitem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ebitem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_department`
+--
+
 DROP TABLE IF EXISTS `sys_department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_department` (
   `depcode` int(11) NOT NULL,
   `depname` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -114,23 +175,25 @@ CREATE TABLE `sys_department` (
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`depcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_department
--- ----------------------------
-INSERT INTO `sys_department` VALUES ('100000000', '总部', '0', '1');
-INSERT INTO `sys_department` VALUES ('102000000', 'yy', '100000000', '1');
-INSERT INTO `sys_department` VALUES ('102010000', 'yy1', '102000000', '1');
-INSERT INTO `sys_department` VALUES ('102020000', 'yy2', '102000000', '1');
-INSERT INTO `sys_department` VALUES ('103000000', 'zz', '100000000', '1');
-INSERT INTO `sys_department` VALUES ('103020000', 'zz1', '103000000', '1');
-INSERT INTO `sys_department` VALUES ('104000000', 'xx', '100000000', '1');
-INSERT INTO `sys_department` VALUES ('104010000', 'xx1', '104000000', '1');
+--
+-- Dumping data for table `sys_department`
+--
 
--- ----------------------------
--- Table structure for sys_log
--- ----------------------------
+LOCK TABLES `sys_department` WRITE;
+/*!40000 ALTER TABLE `sys_department` DISABLE KEYS */;
+INSERT INTO `sys_department` VALUES (100000000,'总部',0,1),(102000000,'yy',100000000,1),(102010000,'yy1',102000000,1),(102020000,'yy2',102000000,1),(103000000,'zz',100000000,1),(103020000,'zz1',103000000,1),(104000000,'xx',100000000,1),(104010000,'xx1',104000000,1);
+/*!40000 ALTER TABLE `sys_department` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_log`
+--
+
 DROP TABLE IF EXISTS `sys_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `operator` varchar(255) NOT NULL,
@@ -141,15 +204,24 @@ CREATE TABLE `sys_log` (
   `resultMsg` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_log
--- ----------------------------
+--
+-- Dumping data for table `sys_log`
+--
 
--- ----------------------------
--- Table structure for sys_menu
--- ----------------------------
+LOCK TABLES `sys_log` WRITE;
+/*!40000 ALTER TABLE `sys_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_menu`
+--
+
 DROP TABLE IF EXISTS `sys_menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menuName` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -158,57 +230,50 @@ CREATE TABLE `sys_menu` (
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_menu
--- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '菜单', '', '0', '1');
-INSERT INTO `sys_menu` VALUES ('2', '菜单管理', '/view/page/system/menu.jsp', '1', '1');
-INSERT INTO `sys_menu` VALUES ('3', '用户管理', '/view/page/system/user.jsp', '1', '1');
-INSERT INTO `sys_menu` VALUES ('4', '权限管理', '/view/page/system/rights.jsp', '1', '1');
-INSERT INTO `sys_menu` VALUES ('5', '日志管理', '/view/page/system/logs.jsp', '1', '1');
-INSERT INTO `sys_menu` VALUES ('6', '部门管理', '/view/page/system/departMent.jsp', '1', '1');
+--
+-- Dumping data for table `sys_menu`
+--
 
--- ----------------------------
--- Table structure for sys_menu_right
--- ----------------------------
+LOCK TABLES `sys_menu` WRITE;
+/*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
+INSERT INTO `sys_menu` VALUES (1,'菜单','',0,1),(2,'菜单管理','/view/page/system/menu.jsp',1,1),(3,'用户管理','/view/page/system/user.jsp',1,1),(4,'权限管理','/view/page/system/rights.jsp',1,1),(5,'日志管理','/view/page/system/logs.jsp',1,1),(6,'部门管理','/view/page/system/departMent.jsp',1,1);
+/*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_menu_right`
+--
+
 DROP TABLE IF EXISTS `sys_menu_right`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_menu_right` (
   `menuID` int(11) NOT NULL,
   `rightID` int(11) NOT NULL,
   PRIMARY KEY (`menuID`,`rightID`),
   KEY `rightID` (`rightID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_menu_right
--- ----------------------------
-INSERT INTO `sys_menu_right` VALUES ('1', '1');
-INSERT INTO `sys_menu_right` VALUES ('2', '2');
-INSERT INTO `sys_menu_right` VALUES ('3', '3');
-INSERT INTO `sys_menu_right` VALUES ('4', '4');
-INSERT INTO `sys_menu_right` VALUES ('5', '5');
-INSERT INTO `sys_menu_right` VALUES ('1', '6');
-INSERT INTO `sys_menu_right` VALUES ('2', '8');
-INSERT INTO `sys_menu_right` VALUES ('2', '9');
-INSERT INTO `sys_menu_right` VALUES ('3', '10');
-INSERT INTO `sys_menu_right` VALUES ('3', '12');
-INSERT INTO `sys_menu_right` VALUES ('4', '13');
-INSERT INTO `sys_menu_right` VALUES ('4', '15');
-INSERT INTO `sys_menu_right` VALUES ('2', '16');
-INSERT INTO `sys_menu_right` VALUES ('3', '21');
-INSERT INTO `sys_menu_right` VALUES ('1', '22');
-INSERT INTO `sys_menu_right` VALUES ('1', '24');
-INSERT INTO `sys_menu_right` VALUES ('6', '25');
-INSERT INTO `sys_menu_right` VALUES ('6', '27');
-INSERT INTO `sys_menu_right` VALUES ('6', '29');
-INSERT INTO `sys_menu_right` VALUES ('1', '30');
-INSERT INTO `sys_menu_right` VALUES ('1', '31');
+--
+-- Dumping data for table `sys_menu_right`
+--
 
--- ----------------------------
--- Table structure for sys_rights
--- ----------------------------
+LOCK TABLES `sys_menu_right` WRITE;
+/*!40000 ALTER TABLE `sys_menu_right` DISABLE KEYS */;
+INSERT INTO `sys_menu_right` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(1,6),(2,8),(2,9),(3,10),(3,12),(4,13),(4,15),(2,16),(3,21),(1,22),(1,24),(6,25),(6,27),(6,29),(1,30),(1,31);
+/*!40000 ALTER TABLE `sys_menu_right` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_rights`
+--
+
 DROP TABLE IF EXISTS `sys_rights`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_rights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `righturl` varchar(50) DEFAULT NULL,
@@ -218,37 +283,26 @@ CREATE TABLE `sys_rights` (
   `rightcode` bigint(20) DEFAULT NULL,
   `common` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_rights
--- ----------------------------
-INSERT INTO `sys_rights` VALUES ('1', '/loginController/doLogin', '登录', '登录', '0', '1', '');
-INSERT INTO `sys_rights` VALUES ('2', '/sysMenuController/getPBBySearch', '查看菜单列表', '查看菜单列表', '0', '2', '\0');
-INSERT INTO `sys_rights` VALUES ('3', '/sysUserController/getPBBySearch', '查看用户列表', '查看用户列表', '0', '4', '\0');
-INSERT INTO `sys_rights` VALUES ('4', '/sysRightsController/getPBBySearch', '查看权限列表', '查看权限列表', '0', '8', '\0');
-INSERT INTO `sys_rights` VALUES ('5', '/sysLogsController/getPBBySearch', '查看日志列表', '查看日志列表', '0', '16', '\0');
-INSERT INTO `sys_rights` VALUES ('6', '/loginController/doLogout', '退出', '退出', '0', '32', '');
-INSERT INTO `sys_rights` VALUES ('8', '/sysMenuController/deleteByID', '删除菜单', '删除菜单', '0', '128', '\0');
-INSERT INTO `sys_rights` VALUES ('9', '/sysMenuController/saveOrUpdate', '新增或修改目录', '新增或修改目录', '0', '256', '\0');
-INSERT INTO `sys_rights` VALUES ('10', '/sysUserController/saveOrUpdate', '新增或修改用户', '新增或修改用户', '0', '512', '\0');
-INSERT INTO `sys_rights` VALUES ('12', '/sysUserController/deleteByIDs', '删除用户', '删除用户', '0', '2048', '\0');
-INSERT INTO `sys_rights` VALUES ('13', '/sysRightsController/saveOrUpdate', '新增或修改权限', '新增或修改权限', '0', '4096', '\0');
-INSERT INTO `sys_rights` VALUES ('15', '/sysRightsController/deleteByIDs', '删除权限', '删除权限', '0', '16384', '\0');
-INSERT INTO `sys_rights` VALUES ('16', '/sysMenuController/getAllList', '得到菜单列表', '得到所有菜单列表', '0', '32768', '\0');
-INSERT INTO `sys_rights` VALUES ('21', '/sysRightsController/setRights', '设置人员权限', '设置人员权限', '0', '65536', '\0');
-INSERT INTO `sys_rights` VALUES ('22', '/commonController/getRightByUser', '得到用户权限', '根据用户id得到该用户的权限id', '0', '131072', '');
-INSERT INTO `sys_rights` VALUES ('24', '/commonController/loadUserMenu', '加载用户菜单', '加载用户菜单', '0', '262144', '');
-INSERT INTO `sys_rights` VALUES ('25', '/sysDepartmentController/getPBBySearch', '查看部门列表', '查看部门列表', '0', '524288', '\0');
-INSERT INTO `sys_rights` VALUES ('27', '/sysDepartmentController/saveOrUpdate', '新增或修改部门', '新增或修改部门', '0', '2097152', '\0');
-INSERT INTO `sys_rights` VALUES ('29', '/sysDepartmentController/deleteByCode', '删除部门', '删除部门', '0', '4194304', '\0');
-INSERT INTO `sys_rights` VALUES ('30', '/commonController/getUserDepList', '得到部门及其以下部门列表', '得到部门及其以下部门列表', '0', '8388608', '');
-INSERT INTO `sys_rights` VALUES ('31', '/commonController/getUserMenu', '得到用户能见菜单', '得到用户能见菜单', '0', '16777216', '');
+--
+-- Dumping data for table `sys_rights`
+--
 
--- ----------------------------
--- Table structure for sys_user
--- ----------------------------
+LOCK TABLES `sys_rights` WRITE;
+/*!40000 ALTER TABLE `sys_rights` DISABLE KEYS */;
+INSERT INTO `sys_rights` VALUES (3,'/sysUserController/getPBBySearch','查看用户列表','查看用户列表',0,4,'\0'),(4,'/sysRightsController/getPBBySearch','查看权限列表','查看权限列表',0,8,'\0'),(5,'/sysLogsController/getPBBySearch','查看日志列表','查看日志列表',0,16,'\0'),(9,'/sysMenuController/saveOrUpdate','新增或修改目录','新增或修改目录',0,256,'\0'),(10,'/sysUserController/saveOrUpdate','新增或修改用户','新增或修改用户',0,512,'\0'),(12,'/sysUserController/deleteByIDs','删除用户','删除用户',0,2048,'\0'),(13,'/sysRightsController/saveOrUpdate','新增或修改权限','新增或修改权限',0,4096,'\0'),(15,'/sysRightsController/deleteByIDs','删除权限','删除权限',0,16384,'\0'),(16,'/sysMenuController/getAllList','得到菜单列表','得到所有菜单列表',0,32768,'\0'),(21,'/sysRightsController/setRights','设置人员权限','设置人员权限',0,65536,'\0'),(27,'/sysDepartmentController/saveOrUpdate','新增或修改部门','新增或修改部门',0,2097152,'\0'),(29,'/sysDepartmentController/deleteByCode','删除部门','删除部门',0,4194304,'\0');
+/*!40000 ALTER TABLE `sys_rights` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_user`
+--
+
 DROP TABLE IF EXISTS `sys_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -260,34 +314,94 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`id`),
   KEY `sysDepCode` (`sysDepCode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '德赫亚', 'dhy', '21232f297a57a5a743894a0e4a801fc3', '1', '1', null);
-INSERT INTO `sys_user` VALUES ('2', '斯莫宁', 'sml', '21232f297a57a5a743894a0e4a801fc3', '2', '1', '102010000');
-INSERT INTO `sys_user` VALUES ('3', '菲尔琼斯', 'feqs', '21232f297a57a5a743894a0e4a801fc3', '4', '1', '102000000');
-INSERT INTO `sys_user` VALUES ('4', '卢克肖', 'lkx', '21232f297a57a5a743894a0e4a801fc3', '3', '1', '102020000');
-INSERT INTO `sys_user` VALUES ('23', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '0', '1', '100000000');
+--
+-- Dumping data for table `sys_user`
+--
 
--- ----------------------------
--- Table structure for sys_user_right
--- ----------------------------
+LOCK TABLES `sys_user` WRITE;
+/*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
+INSERT INTO `sys_user` VALUES (1,'德赫亚','dhy','21232f297a57a5a743894a0e4a801fc3',1,1,NULL),(2,'斯莫宁','sml','21232f297a57a5a743894a0e4a801fc3',2,1,102010000),(3,'菲尔琼斯','feqs','21232f297a57a5a743894a0e4a801fc3',4,1,102000000),(4,'卢克肖','lkx','21232f297a57a5a743894a0e4a801fc3',3,1,102020000),(23,'admin','admin','21232f297a57a5a743894a0e4a801fc3',0,1,100000000);
+/*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_user_right`
+--
+
 DROP TABLE IF EXISTS `sys_user_right`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_user_right` (
   `userID` int(11) NOT NULL DEFAULT '0',
   `rightID` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userID`,`rightID`),
   KEY `rightID` (`rightID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of sys_user_right
--- ----------------------------
-INSERT INTO `sys_user_right` VALUES ('3', '3');
+--
+-- Dumping data for table `sys_user_right`
+--
 
--- ----------------------------
--- View structure for user_right_menu
--- ----------------------------
-DROP VIEW IF EXISTS `user_right_menu`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `user_right_menu` AS select `su`.`name` AS `name`,`su`.`loginName` AS `loginName`,`su`.`password` AS `password`,`su`.`number` AS `number`,`su`.`status` AS `status`,`su`.`sysDepCode` AS `sysDepCode`,`sr`.`righturl` AS `righturl`,`sr`.`rightname` AS `rightname`,`sr`.`rightdesc` AS `rightdesc`,`sm`.`menuName` AS `menuName`,`sm`.`menuUrl` AS `menuUrl`,`sm`.`parentID` AS `parentID`,`su`.`id` AS `userID`,`sr`.`id` AS `rightID`,`sm`.`id` AS `menuID` from ((((`sys_user` `su` join `sys_user_right` `sur`) join `sys_rights` `sr`) join `sys_menu_right` `smr`) join `sys_menu` `sm` on(((`su`.`id` = `sur`.`userID`) and (`sur`.`rightID` = `sr`.`id`) and (`sr`.`id` = `smr`.`rightID`) and (`smr`.`menuID` = `sm`.`id`)))) ;
+LOCK TABLES `sys_user_right` WRITE;
+/*!40000 ALTER TABLE `sys_user_right` DISABLE KEYS */;
+INSERT INTO `sys_user_right` VALUES (3,3);
+/*!40000 ALTER TABLE `sys_user_right` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `user_right_menu`
+--
+
+DROP TABLE IF EXISTS `user_right_menu`;
+/*!50001 DROP VIEW IF EXISTS `user_right_menu`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `user_right_menu` AS SELECT 
+ 1 AS `name`,
+ 1 AS `loginName`,
+ 1 AS `password`,
+ 1 AS `number`,
+ 1 AS `status`,
+ 1 AS `sysDepCode`,
+ 1 AS `righturl`,
+ 1 AS `rightname`,
+ 1 AS `rightdesc`,
+ 1 AS `menuName`,
+ 1 AS `menuUrl`,
+ 1 AS `parentID`,
+ 1 AS `userID`,
+ 1 AS `rightID`,
+ 1 AS `menuID`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `user_right_menu`
+--
+
+/*!50001 DROP VIEW IF EXISTS `user_right_menu`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `user_right_menu` AS select `su`.`name` AS `name`,`su`.`loginName` AS `loginName`,`su`.`password` AS `password`,`su`.`number` AS `number`,`su`.`status` AS `status`,`su`.`sysDepCode` AS `sysDepCode`,`sr`.`righturl` AS `righturl`,`sr`.`rightname` AS `rightname`,`sr`.`rightdesc` AS `rightdesc`,`sm`.`menuName` AS `menuName`,`sm`.`menuUrl` AS `menuUrl`,`sm`.`parentID` AS `parentID`,`su`.`id` AS `userID`,`sr`.`id` AS `rightID`,`sm`.`id` AS `menuID` from ((((`sys_user` `su` join `sys_user_right` `sur`) join `sys_rights` `sr`) join `sys_menu_right` `smr`) join `sys_menu` `sm` on(((`su`.`id` = `sur`.`userID`) and (`sur`.`rightID` = `sr`.`id`) and (`sr`.`id` = `smr`.`rightID`) and (`smr`.`menuID` = `sm`.`id`)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-09-19 17:25:33
